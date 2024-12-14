@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export default function AboutPage() {
 	useEffect(() => {
-		document.title = 'VibeQuest - About';
+		document.title = 'Vibe Quest - About';
 	}, []);
 	return (
 		<>

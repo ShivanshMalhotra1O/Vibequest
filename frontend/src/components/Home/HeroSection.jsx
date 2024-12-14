@@ -39,7 +39,9 @@ export default function HeroSection() {
 								Start Playing
 							</Button>
 						</a>
-						<Button size="lg">Explore Games</Button>
+						<a href="/emotion-detection" className="text-primary">
+							<Button size="lg">Emotion Detection</Button>
+						</a>
 					</div>
 				</div>
 			</div>

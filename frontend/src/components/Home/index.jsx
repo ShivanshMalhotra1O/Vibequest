@@ -6,7 +6,7 @@ import PopularGamesSection from './PopularGamesSection';
 
 export default function HomePage() {
 	useEffect(() => {
-		document.title = 'VibeQuest';
+		document.title = 'Vibe Quest';
 	}, []);
 	return (
 		<div>

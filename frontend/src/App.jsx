@@ -2,6 +2,7 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 
 import AboutPage from '@/components/About';
+import EmotionDetection from '@/components/EmotionDetection';
 import HomePage from '@/components/Home';
 import LoginPage from '@/components/Login';
 import SignUpPage from '@/components/SignUp';
@@ -24,6 +25,8 @@ function App() {
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/about" element={<AboutPage />} />
 				<Route path="/about" element={<AboutPage />} />
+				<Route path="/emotion-detection" element={<EmotionDetection />} />
+
 				<Route path="/games/coin-quest" element={<CoinQuest />} />
 				<Route path="/games/donkey-kong" element={<DonkeyKong />} />
 				<Route path="/games/pacman" element={<Pacman />} />

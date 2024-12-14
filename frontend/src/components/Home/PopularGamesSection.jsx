@@ -71,9 +71,9 @@ function GameCard({ gameName, gameImage, gameDescription, gameLink }) {
 					className="object-cover rounded-xl max-w-[80%]"
 					src={gameImage}
 				/>
-				<Button color="primary" onPress={() => window.open(gameLink, '_blank')}>
-					Play Now
-				</Button>
+				<a href={gameLink}>
+					<Button color="primary">Play Now</Button>
+				</a>
 			</CardBody>
 		</Card>
 	);

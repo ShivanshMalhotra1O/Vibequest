@@ -36,7 +36,10 @@ const games = [
 ];
 export default function PopularGamesSection() {
 	return (
-		<div className="flex flex-col items-center gap-4 px-4 py-8 border-y">
+		<div
+			className="flex flex-col items-center gap-4 px-4 py-20 border-y"
+			id="popular-games"
+		>
 			<h2 className="text-3xl font-bold">Popular Games</h2>
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
 				{games.map((game) => (

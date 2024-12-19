@@ -5,6 +5,7 @@ import AboutPage from '@/components/About';
 import EmotionDetection from '@/components/EmotionDetection';
 import HomePage from '@/components/Home';
 import LoginPage from '@/components/Login';
+import Parallax from '@/components/Parallax';
 import SignUpPage from '@/components/SignUp';
 
 import CoinQuest from '@/components/Games/CoinQuest';
@@ -20,7 +21,8 @@ function App() {
 		<>
 			<Navbar />
 			<Routes>
-				<Route index element={<HomePage />} />
+				<Route index element={<Parallax />} />
+				<Route path="/home" element={<HomePage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/about" element={<AboutPage />} />

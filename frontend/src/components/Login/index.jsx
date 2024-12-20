@@ -6,24 +6,47 @@ import {
 	Form,
 	Input,
 } from '@nextui-org/react';
+import axios from 'axios';
 import * as React from 'react';
+import { toast } from 'sonner';
+
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function LoginForm() {
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
-	const [submitted, setSubmitted] = React.useState(null);
 
-	const onSubmit = (e) => {
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
+
+	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		const data = Object.fromEntries(new FormData(e.currentTarget));
-
-		setSubmitted(data);
+		const data = {
+			username,
+			password,
+		};
+		try {
+			await axios.post(BACKEND_URL + '/user/login', data, {
+				withCredentials: true,
+			});
+			queryClient.invalidateQueries('user_data');
+			queryClient.refetchQueries('user_data');
+			toast.success('Login successful!');
+			setTimeout(() => {
+				navigate('/home');
+			}, 500);
+		} catch {
+			toast.error('Login failed!');
+		}
 	};
 
 	return (
 		<div className="flex flex-col items-center gap-4 px-4 py-16 min-h-[calc(100dvh-197px)]">
-			<Card className="w-[400px]">
+			<Card className="min-w-[300px]">
 				<CardHeader>
 					<h1 className="w-full text-3xl font-bold text-center">Login</h1>
 				</CardHeader>
@@ -63,11 +86,6 @@ export default function LoginForm() {
 								Sign up
 							</a>
 						</p>
-						{submitted && (
-							<div className="text-small text-default-500">
-								You submitted: <code>{JSON.stringify(submitted)}</code>
-							</div>
-						)}
 					</Form>
 				</CardBody>
 			</Card>

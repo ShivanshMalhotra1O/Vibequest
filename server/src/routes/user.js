@@ -10,10 +10,6 @@ const userRouter = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-userRouter.get('/', (req, res) => {
-	res.json({ message: 'Hello from User Router!' });
-});
-
 userRouter.post('/signup', async (req, res) => {
 	try {
 		const data = req.body;
@@ -51,7 +47,8 @@ userRouter.post('/signup', async (req, res) => {
 
 		const token = jwt.sign({ userId }, JWT_SECRET);
 
-		res.json({ message: 'User created successfully!', token });
+		res.cookie('token', token);
+		res.json({ message: 'User created successfully!' });
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: 'Internal server error!' });
@@ -84,7 +81,32 @@ userRouter.post('/login', async (req, res) => {
 
 		const token = jwt.sign({ userId: user._id }, JWT_SECRET);
 
-		res.json({ message: 'Login successful!', token });
+		res.cookie('token', token);
+		res.json({ message: 'Login successful!' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Internal server error!' });
+	}
+});
+
+userRouter.post('/logout', async (req, res) => {
+	res.clearCookie('token');
+	res.json({ message: 'Logged out successfully!' });
+});
+
+userRouter.get('/', async (req, res) => {
+	try {
+		const token = req.cookies.token;
+		if (!token) {
+			return res.status(401).json({ message: 'Unauthorized!' });
+		}
+		const { userId } = jwt.verify(token, JWT_SECRET);
+		const user = await UserModel.findById(userId);
+		res.json({
+			id: user._id,
+			name: user.name,
+			username: user.username,
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: 'Internal server error!' });

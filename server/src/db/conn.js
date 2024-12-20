@@ -7,7 +7,9 @@ const DATABASE_URL = process.env.DATABASE_URL;
 // Database Connection
 export const createConnection = () => {
 	mongoose
-		.connect(DATABASE_URL)
+		.connect(DATABASE_URL, {
+			dbName: 'vibequest',
+		})
 		.then((e) => {
 			console.log('Database connected');
 		})

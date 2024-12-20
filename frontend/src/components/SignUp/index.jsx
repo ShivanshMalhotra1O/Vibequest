@@ -6,32 +6,54 @@ import {
 	Form,
 	Input,
 } from '@nextui-org/react';
+import { useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function SignUpForm() {
+	const [name, setName] = React.useState('');
 	const [username, setUsername] = React.useState('');
-	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [confirmPassword, setConfirmPassword] = React.useState('');
-	const [submitted, setSubmitted] = React.useState(null);
+	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
-	const navigate = useNavigate(); // Initialize the useNavigate hook for navigation
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
-	const onSubmit = (e) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		// Capture form data
-		const data = Object.fromEntries(new FormData(e.currentTarget));
-		setSubmitted(data);
-
-		// Redirect to the login page upon successful form submission
-		navigate('/login');
+		if (password !== confirmPassword) {
+			toast.error('Passwords do not match');
+			return;
+		}
+		const data = {
+			name,
+			username,
+			password,
+		};
+		try {
+			await axios.post(BACKEND_URL + '/user/signup', data, {
+				withCredentials: true,
+			});
+			queryClient.invalidateQueries('user_data');
+			queryClient.refetchQueries('user_data');
+			setTimeout(() => {
+				navigate('/home');
+			}, 500);
+		} catch {
+			toast.error('Signup failed!');
+		}
 	};
 
 	return (
 		<div className="flex flex-col items-center gap-4 px-4 py-16 min-h-[calc(100dvh-197px)]">
-			<Card className="w-[400px]">
+			<Card className="min-w-[300px]">
 				<CardHeader>
 					<h1 className="w-full text-3xl font-bold text-center">Signup</h1>
 				</CardHeader>
@@ -43,6 +65,16 @@ export default function SignUpForm() {
 					>
 						<Input
 							isRequired
+							errorMessage="Please enter a valid name"
+							label="Name"
+							labelPlacement="outside"
+							name="name"
+							placeholder="Enter your name"
+							value={name}
+							onValueChange={setName}
+						/>
+						<Input
+							isRequired
 							errorMessage="Please enter a valid username"
 							label="Username"
 							labelPlacement="outside"
@@ -52,7 +84,7 @@ export default function SignUpForm() {
 							value={username}
 							onValueChange={setUsername}
 						/>
-						<Input
+						{/* <Input
 							isRequired
 							errorMessage="Please enter a valid email"
 							label="Email"
@@ -62,7 +94,7 @@ export default function SignUpForm() {
 							type="email"
 							value={email}
 							onValueChange={setEmail}
-						/>
+						/> */}
 						<Input
 							isRequired
 							errorMessage="Please enter a valid password"
@@ -70,7 +102,16 @@ export default function SignUpForm() {
 							labelPlacement="outside"
 							name="password"
 							placeholder="Enter your password"
-							type="password"
+							type={isPasswordVisible ? 'text' : 'password'}
+							endContent={
+								<button
+									type="button"
+									tabIndex={-1}
+									onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+								>
+									{isPasswordVisible ? <EyeOffIcon /> : <EyeIcon />}
+								</button>
+							}
 							value={password}
 							onValueChange={setPassword}
 						/>
@@ -81,8 +122,17 @@ export default function SignUpForm() {
 							labelPlacement="outside"
 							name="confirmPassword"
 							placeholder="Confirm your password"
-							type="password"
 							value={confirmPassword}
+							type={isPasswordVisible ? 'text' : 'password'}
+							endContent={
+								<button
+									type="button"
+									tabIndex={-1}
+									onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+								>
+									{isPasswordVisible ? <EyeOffIcon /> : <EyeIcon />}
+								</button>
+							}
 							onValueChange={setConfirmPassword}
 						/>
 						<Button type="submit" variant="bordered" className="ml-auto">
@@ -94,11 +144,6 @@ export default function SignUpForm() {
 								Login
 							</a>
 						</p>
-						{submitted && (
-							<div className="text-small text-default-500">
-								You submitted: <code>{JSON.stringify(submitted)}</code>
-							</div>
-						)}
 					</Form>
 				</CardBody>
 			</Card>

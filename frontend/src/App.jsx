@@ -14,9 +14,26 @@ import Pacman from '@/components/Games/Pacman';
 import SnakeGame from '@/components/Games/Snake';
 import SpaceInvaders from '@/components/Games/SpaceInvaders';
 
-import { Route, Routes } from 'react-router';
+import { useUser } from '@/utils';
+import { Route, Routes, useNavigate } from 'react-router';
+import { Toaster } from 'sonner';
 
 function App() {
+	const navigate = useNavigate();
+
+	const { data, isLoading } = useUser();
+
+	const path = window.location.pathname;
+	const loginPages = ['/login', '/signup'];
+	const nonAuthPages = [...loginPages, '/about', '/'];
+
+	if (!isLoading && data && loginPages.includes(path)) {
+		navigate('/home');
+	}
+	if (!isLoading && !data && !nonAuthPages.includes(path)) {
+		navigate('/login');
+	}
+
 	return (
 		<>
 			<Navbar />
@@ -36,6 +53,7 @@ function App() {
 				<Route path="/games/space-invaders" element={<SpaceInvaders />} />
 			</Routes>
 			<Footer />
+			<Toaster richColors />
 		</>
 	);
 }

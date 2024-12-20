@@ -1,5 +1,8 @@
 import { Button } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
+
+import { useUser } from '@/utils';
+
 import './Parallax.css';
 
 // Image paths (use paths relative to your public folder)
@@ -12,6 +15,8 @@ const ICON_5 = '/images/game-5.jpg';
 const TOP_IMAGE = '/images/Device5.png';
 
 export default function ParallaxPage() {
+	const { data } = useUser();
+
 	const [scrollPosition, setScrollPosition] = useState(0);
 
 	const handleScroll = () => {
@@ -82,9 +87,9 @@ export default function ParallaxPage() {
 					<p className="subtitle">
 						Your ultimate destination for all things gaming.
 					</p>
-					<a href="/login" className="text-primary">
+					<a href={data ? '/home' : '/login'} className="text-primary">
 						<Button color="primary" size="lg">
-							Start Playing
+							{data ? "Let's Play" : 'Login to Play'}
 						</Button>
 					</a>
 				</div>

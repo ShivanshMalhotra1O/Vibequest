@@ -52,7 +52,7 @@ export default function EmotionDetection() {
 	}, [socket, sendFrame]);
 
 	return (
-		<div className="box-border flex flex-col items-center justify-center h-[calc(100dvh-197px)] p-5 bg-gray-100">
+		<div className="box-border flex flex-col items-center min-h-[calc(100dvh-157px)] p-5 bg-gray-100">
 			<h1 className="mb-5 text-4xl font-bold text-gray-800">
 				Real-Time Emotion Detection
 			</h1>

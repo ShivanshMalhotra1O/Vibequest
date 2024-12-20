@@ -50,7 +50,7 @@ userRouter.post('/signup', async (req, res) => {
 		res.cookie('token', token, {
 			secure: process.env.NODE_ENV === 'production',
 			httpOnly: true,
-			sameSite: 'strict',
+			sameSite: 'none',
 		});
 		res.json({ message: 'User created successfully!' });
 	} catch (error) {
@@ -88,7 +88,7 @@ userRouter.post('/login', async (req, res) => {
 		res.cookie('token', token, {
 			secure: process.env.NODE_ENV === 'production',
 			httpOnly: true,
-			sameSite: 'strict',
+			sameSite: 'none',
 		});
 		res.json({ message: 'Login successful!' });
 	} catch (error) {

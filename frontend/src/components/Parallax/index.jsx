@@ -88,7 +88,13 @@ export default function ParallaxPage() {
 						Your ultimate destination for all things gaming.
 					</p>
 					<a href={data ? '/home' : '/login'} className="text-primary">
-						<Button color="primary" size="lg">
+						<Button
+							color="primary"
+							size="lg"
+							onPress={() => {
+								window.location.href = data ? '/home' : '/login';
+							}}
+						>
 							{data ? "Let's Play" : 'Login to Play'}
 						</Button>
 					</a>

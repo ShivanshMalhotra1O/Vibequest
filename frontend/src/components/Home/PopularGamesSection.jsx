@@ -93,7 +93,12 @@ function GameCard({ gameName, gameImage, gameDescription, gameLink }) {
 					src={gameImage}
 				/>
 				<a href={gameLink}>
-					<Button color="primary">Play Now</Button>
+					<Button
+						color="primary"
+						onPress={() => (window.location.href = gameLink)}
+					>
+						Play Now
+					</Button>
 				</a>
 			</CardBody>
 		</Card>

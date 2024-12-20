@@ -136,9 +136,17 @@ export default function Nav() {
 					<NavbarItem className="flex gap-2 text-base">
 						<Dropdown>
 							<DropdownTrigger>
-								<div className="flex items-center gap-2">
+								{userData?.image ? (
+									<img
+										src={`data:image/png;base64,${toBase64(
+											userData?.image?.data
+										)}`}
+										alt="Profile"
+										className="w-8 h-8 rounded-full"
+									/>
+								) : (
 									<CircleUserRoundIcon className="w-8 h-8" />
-								</div>
+								)}
 							</DropdownTrigger>
 							<DropdownMenu>
 								<DropdownItem>

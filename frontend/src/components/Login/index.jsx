@@ -45,7 +45,7 @@ export default function LoginForm() {
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-4 px-4 py-16 min-h-[calc(100dvh-197px)]">
+		<div className="flex flex-col items-center gap-4 px-4 py-16 min-h-[calc(100dvh-157px)]">
 			<Card className="min-w-[300px]">
 				<CardHeader>
 					<h1 className="w-full text-3xl font-bold text-center">Login</h1>

@@ -12,7 +12,7 @@ export default function AboutPage() {
 					alt="About"
 					className="absolute top-0 z-0 object-cover w-full h-96 blur-sm brightness-[0.33]"
 				/>
-				<div className="flex flex-col items-center gap-4 px-4 py-16 mt-72 min-h-[calc(100dvh-485px)]">
+				<div className="flex flex-col items-center gap-4 px-4 py-16 mt-72 min-h-[calc(100dvh-445px)]">
 					<div className="flex flex-col items-center max-w-5xl gap-4 text-justify">
 						<h2 className="text-3xl font-bold">About Us</h2>
 						<p className="text-lg">

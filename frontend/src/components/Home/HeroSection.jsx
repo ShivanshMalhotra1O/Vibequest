@@ -35,12 +35,21 @@ export default function HeroSection() {
 					</p>
 					<div className="flex flex-wrap justify-center gap-4">
 						<a href="#popular-games" className="text-primary">
-							<Button color="primary" size="lg">
+							<Button
+								color="primary"
+								size="lg"
+								onPress={() => (window.location.href = '#popular-games')}
+							>
 								Start Playing
 							</Button>
 						</a>
 						<a href="/emotion-detection" className="text-primary">
-							<Button size="lg">Emotion Detection</Button>
+							<Button
+								size="lg"
+								onPress={() => (window.location.href = '/emotion-detection')}
+							>
+								Emotion Detection
+							</Button>
 						</a>
 					</div>
 				</div>

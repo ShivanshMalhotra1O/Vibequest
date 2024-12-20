@@ -1,5 +1,9 @@
 import 'dotenv/config';
 
+import { readFileSync, unlinkSync } from 'fs';
+
+import multer from 'multer';
+
 import { Router } from 'express';
 
 import jwt from 'jsonwebtoken';
@@ -10,18 +14,26 @@ const userRouter = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-userRouter.post('/signup', async (req, res) => {
+const upload = multer({
+	dest: 'public/',
+});
+
+userRouter.post('/signup', upload.single('image'), async (req, res) => {
 	try {
 		const data = req.body;
 		const name = data?.name;
 		const username = data?.username;
 		const password = data?.password;
+		const imageData = req.file;
+
 		if (!name) {
 			return res.status(400).json({ message: 'Name is required!' });
 		} else if (!username) {
 			return res.status(400).json({ message: 'Username is required!' });
 		} else if (!password) {
 			return res.status(400).json({ message: 'Password is required!' });
+		} else if (!imageData) {
+			return res.status(400).json({ message: 'Image is required!' });
 		}
 
 		const existingUser = await UserModel.findOne({
@@ -32,10 +44,14 @@ userRouter.post('/signup', async (req, res) => {
 			return res.status(400).json({ message: 'Username already exists!' });
 		}
 
+		const file = readFileSync(imageData.path);
+		unlinkSync(imageData.path);
+
 		const newUser = new UserModel({
 			name: name,
 			username: username,
 			passwordHash: password,
+			image: file,
 		});
 
 		const hashedPassword = await newUser.createHash(password);
@@ -48,7 +64,7 @@ userRouter.post('/signup', async (req, res) => {
 		const token = jwt.sign({ userId }, JWT_SECRET);
 
 		res.cookie('token', token, {
-			secure: process.env.NODE_ENV === 'production',
+			secure: true,
 			httpOnly: true,
 			sameSite: 'none',
 		});
@@ -86,7 +102,7 @@ userRouter.post('/login', async (req, res) => {
 		const token = jwt.sign({ userId: user._id }, JWT_SECRET);
 
 		res.cookie('token', token, {
-			secure: process.env.NODE_ENV === 'production',
+			secure: true,
 			httpOnly: true,
 			sameSite: 'none',
 		});
@@ -99,7 +115,7 @@ userRouter.post('/login', async (req, res) => {
 
 userRouter.post('/logout', async (req, res) => {
 	res.clearCookie('token', {
-		secure: process.env.NODE_ENV === 'production',
+		secure: true,
 		httpOnly: true,
 		sameSite: 'none',
 	});
@@ -118,6 +134,8 @@ userRouter.get('/', async (req, res) => {
 			id: user._id,
 			name: user.name,
 			username: user.username,
+			image: user.image,
+			joinedDate: user.createdAt,
 		});
 	} catch (error) {
 		console.error(error);

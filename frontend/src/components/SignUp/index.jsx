@@ -19,6 +19,7 @@ export default function SignUpForm() {
 	const [name, setName] = React.useState('');
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
+	const [image, setImage] = React.useState('');
 	const [confirmPassword, setConfirmPassword] = React.useState('');
 	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
@@ -32,13 +33,13 @@ export default function SignUpForm() {
 			toast.error('Passwords do not match');
 			return;
 		}
-		const data = {
-			name,
-			username,
-			password,
-		};
+		const formData = new FormData();
+		formData.append('name', name);
+		formData.append('username', username);
+		formData.append('password', password);
+		formData.append('image', image);
 		try {
-			await axios.post(BACKEND_URL + '/user/signup', data, {
+			await axios.post(BACKEND_URL + '/user/signup', formData, {
 				withCredentials: true,
 			});
 			queryClient.invalidateQueries('user_data');
@@ -52,7 +53,7 @@ export default function SignUpForm() {
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-4 px-4 py-16 min-h-[calc(100dvh-197px)]">
+		<div className="flex flex-col items-center gap-4 px-4 py-16 min-h-[calc(100dvh-157px)]">
 			<Card className="min-w-[300px]">
 				<CardHeader>
 					<h1 className="w-full text-3xl font-bold text-center">Signup</h1>
@@ -134,6 +135,17 @@ export default function SignUpForm() {
 								</button>
 							}
 							onValueChange={setConfirmPassword}
+						/>
+						<Input
+							isRequired
+							type="file"
+							label="Profile Pic"
+							name="image"
+							onChange={(e) => {
+								setImage(e.target.files[0]);
+							}}
+							accept="image/*"
+							errorMessage="Please upload a valid image"
 						/>
 						<Button type="submit" variant="bordered" className="ml-auto">
 							Submit

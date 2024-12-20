@@ -53,12 +53,16 @@ export default function GamePage() {
 	}, [gameName, game?.title]);
 
 	if (!game) {
-		return <div>Game not found</div>;
+		return (
+			<div className="flex flex-col justify-center text-4xl font-bold items-center gap-4 px-4 py-20 border-y min-h-[calc(100dvh-157px)]">
+				Game not found
+			</div>
+		);
 	}
 
 	return (
 		<>
-			<div className="flex flex-col items-center gap-4 px-4 py-20 border-y min-h-[calc(100dvh-197px)]">
+			<div className="flex flex-col items-center gap-4 px-4 py-20 border-y min-h-[calc(100dvh-157px)]">
 				<h2 className="text-3xl font-bold text-center">{game.title}</h2>
 				<div className="flex justify-center w-full px-4">
 					<iframe

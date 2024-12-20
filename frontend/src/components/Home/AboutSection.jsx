@@ -2,8 +2,8 @@ import { Button } from '@nextui-org/react';
 
 export default function AboutSection() {
 	return (
-		<div className="grid md:grid-cols-2 gap-4 px-4 py-8 border-y items-center">
-			<div className="flex flex-col gap-4 px-4 lg:px-8 py-8">
+		<div className="grid items-center gap-4 px-4 py-8 md:grid-cols-2 border-y">
+			<div className="flex flex-col gap-4 px-4 py-8 lg:px-8">
 				<h2 className="text-3xl font-bold">About VibeQuest</h2>
 				<p className="text-lg text-justify">
 					VibeQuest is your ultimate gaming platform where adventure, strategy,
@@ -12,7 +12,11 @@ export default function AboutSection() {
 				</p>
 				<div>
 					<a href="/about">
-						<Button color="primary" size="lg">
+						<Button
+							color="primary"
+							size="lg"
+							onPress={() => (window.location.href = '/about')}
+						>
 							Learn More
 						</Button>
 					</a>

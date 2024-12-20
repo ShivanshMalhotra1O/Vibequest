@@ -7,7 +7,7 @@ export default function CoinQuest() {
 
 	return (
 		<>
-			<div className="flex flex-col items-center gap-4 px-4 py-20 border-y min-h-[calc(100dvh-197px)]">
+			<div className="flex flex-col items-center gap-4 px-4 py-20 border-y min-h-[calc(100dvh-157px)]">
 				<h2 className="text-3xl font-bold text-center">Coin Quest</h2>
 				<iframe
 					src="https://mukund1606.github.io/vibe-quest/coin-quest"

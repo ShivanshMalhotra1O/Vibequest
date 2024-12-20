@@ -5,10 +5,14 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 /**
  * Returns the user data from the backend
+ * @typedef {Object} UserImage
+ * @property {Buffer} data - The user's profile picture
  * @typedef {Object} User
  * @property {string} id - The user's ID
  * @property {string} name - The user's name
  * @property {string} username - The user's username
+ * @property {UserImage} image - The user's profile picture
+ * @property {string} joinedDate - The date the user joined the app
  * @returns {Promise<User>} The user data
  */
 export const getUserData = async () => {
@@ -46,3 +50,9 @@ export const logOut = async () => {
 		return null;
 	}
 };
+
+export function toBase64(arr) {
+	return btoa(
+		arr?.reduce((data, byte) => data + String.fromCharCode(byte), '')
+	);
+}

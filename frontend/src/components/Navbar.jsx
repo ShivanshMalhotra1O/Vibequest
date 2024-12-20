@@ -1,5 +1,10 @@
-import { logOut, useUser } from '@/utils';
+import { logOut, toBase64, useUser } from '@/utils';
 import {
+	Button,
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
 	Link,
 	Navbar,
 	NavbarBrand,
@@ -9,6 +14,7 @@ import {
 	NavbarMenuItem,
 	NavbarMenuToggle,
 } from '@nextui-org/react';
+import { CircleUserRoundIcon } from 'lucide-react';
 
 export default function Nav() {
 	const { data: userData } = useUser();
@@ -62,10 +68,40 @@ export default function Nav() {
 				</NavbarItem>
 				{userData ? (
 					<NavbarItem className="flex gap-2 text-base">
-						<p>Hi, {userData?.name}!</p>
-						<button className="underline cursor-pointer" onClick={logOut}>
-							Logout
-						</button>
+						<Dropdown>
+							<DropdownTrigger>
+								<div className="flex items-center gap-2">
+									<p>Hi, {userData?.name}!</p>
+									{userData?.image ? (
+										<img
+											src={`data:image/png;base64,${toBase64(
+												userData?.image?.data
+											)}`}
+											alt="Profile"
+											className="w-8 h-8 rounded-full"
+										/>
+									) : (
+										<CircleUserRoundIcon className="w-8 h-8" />
+									)}
+								</div>
+							</DropdownTrigger>
+							<DropdownMenu>
+								<DropdownItem
+									onPress={() => {
+										window.location.href = '/profile';
+									}}
+								>
+									Profile
+								</DropdownItem>
+								<DropdownItem
+									color="danger"
+									className="w-full text-danger"
+									onPress={logOut}
+								>
+									Logout
+								</DropdownItem>
+							</DropdownMenu>
+						</Dropdown>
 					</NavbarItem>
 				) : (
 					<>
@@ -96,15 +132,37 @@ export default function Nav() {
 			{/* Mobile Menu Toggle */}
 			<NavbarContent justify="end" className="sm:hidden">
 				<NavbarMenuToggle />
+				{userData && (
+					<NavbarItem className="flex gap-2 text-base">
+						<Dropdown>
+							<DropdownTrigger>
+								<div className="flex items-center gap-2">
+									<CircleUserRoundIcon className="w-8 h-8" />
+								</div>
+							</DropdownTrigger>
+							<DropdownMenu>
+								<DropdownItem>
+									<p>Hi, {userData?.name}!</p>
+								</DropdownItem>
+								<DropdownItem
+									as={Button}
+									color="danger"
+									className="w-full bg-danger text-danger-foreground"
+									onPress={logOut}
+									variant="faded"
+								>
+									Logout
+								</DropdownItem>
+							</DropdownMenu>
+						</Dropdown>
+					</NavbarItem>
+				)}
 			</NavbarContent>
 
 			{/* Mobile Navigation Menu */}
 			<NavbarMenu className="mt-2 text-3xl bg-black">
 				{userData && (
 					<>
-						<NavbarMenuItem className="flex flex-col gap-2 text-lg font-semibold text-primary">
-							<p>Hi, {userData?.name}!</p>
-						</NavbarMenuItem>
 						<NavbarMenuItem>
 							<Link
 								href="/home"
@@ -127,16 +185,7 @@ export default function Nav() {
 						About
 					</Link>
 				</NavbarMenuItem>
-				{userData ? (
-					<NavbarMenuItem className="flex flex-col gap-2 text-base">
-						<button
-							className="text-left underline cursor-pointer text-primary w-fit"
-							onClick={logOut}
-						>
-							Logout
-						</button>
-					</NavbarMenuItem>
-				) : (
+				{!userData && (
 					<>
 						<NavbarMenuItem>
 							<Link

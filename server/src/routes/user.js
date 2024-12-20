@@ -98,7 +98,11 @@ userRouter.post('/login', async (req, res) => {
 });
 
 userRouter.post('/logout', async (req, res) => {
-	res.clearCookie('token');
+	res.clearCookie('token', {
+		secure: process.env.NODE_ENV === 'production',
+		httpOnly: true,
+		sameSite: 'none',
+	});
 	res.json({ message: 'Logged out successfully!' });
 });
 

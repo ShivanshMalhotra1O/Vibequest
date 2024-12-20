@@ -11,31 +11,32 @@ import {
 
 export default function Nav() {
 	return (
-		<Navbar className="px-6 py-8 text-white bg-black lg:px-8 xl:px-16">
-			<NavbarContent>
+		<Navbar className="px-2 py-4 text-white bg-black">
+			{/* Left Content: Logo and Heading */}
+			<NavbarContent className="flex items-center gap-3">
 				<NavbarBrand>
-					<a href="/" className="flex items-center gap-4 group">
+					<a href="/" className="flex items-center gap-5 group">
 						<img
 							src="/images/logo.png"
 							alt="Logo"
-							className="w-auto h-10 rounded-md"
+							className="w-auto h-12 rounded-md"
 						/>
 						<h1 className="text-3xl font-bold">VibeQuest</h1>
 					</a>
 				</NavbarBrand>
 			</NavbarContent>
 
-			<NavbarContent justify="end" className="sm:hidden">
-				<NavbarMenuToggle />
-			</NavbarContent>
+			{/* Right Content: Navigation Tags */}
 			<NavbarContent
-				className="items-center hidden gap-4 text-lg font-medium sm:flex"
+				className="hidden gap-4 text-2xl font-medium sm:flex ml-auto"
 				justify="end"
 			>
 				<NavbarItem>
 					<a
-						href="/"
-						className={window.location.pathname === '/' ? 'text-primary' : ''}
+						href="/home"
+						className={`${
+							window.location.pathname === '/home' ? 'text-primary' : ''
+						}`}
 					>
 						Home
 					</a>
@@ -43,9 +44,9 @@ export default function Nav() {
 				<NavbarItem>
 					<a
 						href="/about"
-						className={
+						className={`${
 							window.location.pathname === '/about' ? 'text-primary' : ''
-						}
+						}`}
 					>
 						About
 					</a>
@@ -53,9 +54,9 @@ export default function Nav() {
 				<NavbarItem>
 					<a
 						href="/login"
-						className={
+						className={`${
 							window.location.pathname === '/login' ? 'text-primary' : ''
-						}
+						}`}
 					>
 						Login
 					</a>
@@ -63,19 +64,28 @@ export default function Nav() {
 				<NavbarItem>
 					<a
 						href="/signup"
-						className={
+						className={`${
 							window.location.pathname === '/signup' ? 'text-primary' : ''
-						}
+						}`}
 					>
 						Signup
 					</a>
 				</NavbarItem>
 			</NavbarContent>
-			<NavbarMenu className="bg-black mt-14">
+
+			{/* Mobile Menu Toggle */}
+			<NavbarContent justify="end" className="sm:hidden">
+				<NavbarMenuToggle />
+			</NavbarContent>
+
+			{/* Mobile Navigation Menu */}
+			<NavbarMenu className="bg-black mt-14 text-3xl">
 				<NavbarMenuItem>
 					<Link
-						href="/"
-						className={window.location.pathname === '/' ? 'text-primary' : ''}
+						href="/home"
+						className={`${
+							window.location.pathname === '/home' ? 'text-primary' : ''
+						}`}
 					>
 						Home
 					</Link>
@@ -83,9 +93,9 @@ export default function Nav() {
 				<NavbarMenuItem>
 					<Link
 						href="/about"
-						className={
+						className={`${
 							window.location.pathname === '/about' ? 'text-primary' : ''
-						}
+						}`}
 					>
 						About
 					</Link>
@@ -93,9 +103,9 @@ export default function Nav() {
 				<NavbarMenuItem>
 					<Link
 						href="/login"
-						className={
+						className={`${
 							window.location.pathname === '/login' ? 'text-primary' : ''
-						}
+						}`}
 					>
 						Login
 					</Link>
@@ -103,9 +113,9 @@ export default function Nav() {
 				<NavbarMenuItem>
 					<Link
 						href="/signup"
-						className={
+						className={`${
 							window.location.pathname === '/signup' ? 'text-primary' : ''
-						}
+						}`}
 					>
 						Signup
 					</Link>

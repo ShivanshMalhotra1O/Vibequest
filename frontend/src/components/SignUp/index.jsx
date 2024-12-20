@@ -7,6 +7,7 @@ import {
 	Input,
 } from '@nextui-org/react';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpForm() {
 	const [username, setUsername] = React.useState('');
@@ -15,12 +16,17 @@ export default function SignUpForm() {
 	const [confirmPassword, setConfirmPassword] = React.useState('');
 	const [submitted, setSubmitted] = React.useState(null);
 
+	const navigate = useNavigate(); // Initialize the useNavigate hook for navigation
+
 	const onSubmit = (e) => {
 		e.preventDefault();
 
+		// Capture form data
 		const data = Object.fromEntries(new FormData(e.currentTarget));
-
 		setSubmitted(data);
+
+		// Redirect to the login page upon successful form submission
+		navigate('/login');
 	};
 
 	return (

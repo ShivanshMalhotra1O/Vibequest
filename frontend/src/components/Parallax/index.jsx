@@ -82,7 +82,7 @@ export default function ParallaxPage() {
 					<p className="subtitle">
 						Your ultimate destination for all things gaming.
 					</p>
-					<a href="/home" className="text-primary">
+					<a href="/login" className="text-primary">
 						<Button color="primary" size="lg">
 							Start Playing
 						</Button>

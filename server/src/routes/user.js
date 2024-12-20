@@ -47,7 +47,11 @@ userRouter.post('/signup', async (req, res) => {
 
 		const token = jwt.sign({ userId }, JWT_SECRET);
 
-		res.cookie('token', token);
+		res.cookie('token', token, {
+			secure: process.env.NODE_ENV === 'production',
+			httpOnly: true,
+			sameSite: 'strict',
+		});
 		res.json({ message: 'User created successfully!' });
 	} catch (error) {
 		console.error(error);
@@ -81,7 +85,11 @@ userRouter.post('/login', async (req, res) => {
 
 		const token = jwt.sign({ userId: user._id }, JWT_SECRET);
 
-		res.cookie('token', token);
+		res.cookie('token', token, {
+			secure: process.env.NODE_ENV === 'production',
+			httpOnly: true,
+			sameSite: 'strict',
+		});
 		res.json({ message: 'Login successful!' });
 	} catch (error) {
 		console.error(error);

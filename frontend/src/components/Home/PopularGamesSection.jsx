@@ -5,33 +5,54 @@ const games = [
 		gameName: 'Coin Quest',
 		gameImage: '/images/game-1.jpg',
 		gameDescription: 'Action-packed and full of adventure.',
-		gameLink: '/games/coin-quest',
+		gameLink: '/games?game=coin-quest',
 	},
 	{
 		gameName: 'Donkey Kong',
 		gameImage: '/images/game-2.jpg',
 		gameDescription: 'A thrilling puzzle game to challenge your mind.',
-		gameLink: '/games/donkey-kong',
+		gameLink: '/games?game=donkey-kong',
 	},
 	{
 		gameName: 'Pacman',
 		gameImage: '/images/game-3.jpg',
 		gameDescription:
 			'A classic arcade game that has been entertaining for decades.',
-		gameLink: '/games/pacman',
+		gameLink: '/games?game=pacman',
 	},
 	{
 		gameName: 'Snake Game',
 		gameImage: '/images/game-4.jpg',
 		gameDescription: 'A fun and engaging game that tests your reflexes.',
-		gameLink: '/games/snake-game',
+		gameLink: '/games?game=snake-game',
 	},
 	{
 		gameName: 'Space Invaders',
 		gameImage: '/images/game-5.jpg',
 		gameDescription:
 			'Space Shooter that challenges your reflexes and strategic thinking.',
-		gameLink: '/games/space-invaders',
+		gameLink: '/games?game=space-invaders',
+	},
+	{
+		gameName: '2048',
+		gameImage: '/images/game-6.jpg',
+		gameDescription:
+			'A classic game that requires logic, strategy, and patience.',
+		gameLink: '/games?game=2048',
+	},
+	{
+		gameName: 'Chess',
+		gameImage: '/images/game-7.jpg',
+		gameDescription:
+			'A game of strategy and tactics where you control the movement of your pieces.',
+		gameLink: '/games?game=chess',
+	},
+	{
+		gameName: 'Car Game',
+		gameImage: '/images/game-8.jpg',
+		gameDescription:
+			'A fun and exciting game that tests your reflexes and problem-solving skills.',
+		gameLink: '/games?game=car-game',
 	},
 ];
 export default function PopularGamesSection() {

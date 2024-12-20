@@ -1,4 +1,5 @@
 import { toBase64, useUser } from '@/utils';
+import { CircleUserRoundIcon } from 'lucide-react';
 
 export default function ProfilePage() {
 	const { data: userData } = useUser();
@@ -7,11 +8,15 @@ export default function ProfilePage() {
 			{/* Profile Header */}
 			<div className="flex flex-col items-center w-full max-w-3xl p-6 bg-white rounded-lg shadow-md">
 				{/* Profile Picture */}
-				<img
-					src={`data:image/png;base64,${toBase64(userData?.image?.data)}`}
-					alt="Profile"
-					className="w-24 rounded-full"
-				/>
+				{userData?.image ? (
+					<img
+						src={`data:image/png;base64,${toBase64(userData?.image?.data)}`}
+						alt="Profile"
+						className="w-24 h-24 rounded-full"
+					/>
+				) : (
+					<CircleUserRoundIcon className="w-24 h-24" />
+				)}
 
 				{/* Name and Email */}
 				<h1 className="mb-2 text-3xl font-bold text-gray-800">

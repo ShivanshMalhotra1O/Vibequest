@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 
-const SOCKET_URL = 'ws://127.0.0.1:8000/ws/detect-emotion/';
+// const SOCKET_URL = 'ws://127.0.0.1:8000/ws/detect-emotion/';
+const SOCKET_URL = 'ws://minor-project-model.mukund.page/';
 export default function EmotionDetection() {
 	const webcamRef = useRef(null);
 	const [detections, setDetections] = useState([]);

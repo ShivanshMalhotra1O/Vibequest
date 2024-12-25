@@ -14,9 +14,9 @@ import ProfilePage from './components/Profile';
 // import Pacman from '@/components/Games/Pacman';
 // import SpaceInvaders from '@/components/Games/SpaceInvaders';
 
+import GameComponent from '@/components/Games/GameComponent';
 import GamePage from '@/components/Games/GamePage';
 
-import SnakeGame from '@/components/Games/Snake';
 import Leaderboard from '@/components/Leaderboard';
 
 import { useUser } from '@/utils';
@@ -56,10 +56,29 @@ function App() {
 
 				<Route path="/games" element={<GamePage />} />
 
+				<Route
+					path="/games/snake-game"
+					element={<GameComponent gameName="snake_game" />}
+				/>
+				<Route path="/games/2048" element={<GameComponent gameName="2048" />} />
+				<Route
+					path="/games/space-invaders"
+					element={<GameComponent gameName="space_invaders" />}
+				/>
+				<Route
+					path="/games/chess"
+					element={
+						<GameComponent gameName="chess" toUpdateLeaderboard={false} />
+					}
+				/>
+				<Route
+					path="/games/car_game"
+					element={<GameComponent gameName="car_game" />}
+				/>
+
 				{/* <Route path="/games/coin-quest" element={<CoinQuest />} /> */}
 				{/* <Route path="/games/donkey-kong" element={<DonkeyKong />} /> */}
 				{/* <Route path="/games/pacman" element={<Pacman />} /> */}
-				<Route path="/games/snake-game" element={<SnakeGame />} />
 				{/* <Route path="/games/space-invaders" element={<SpaceInvaders />} /> */}
 			</Routes>
 			<Footer />

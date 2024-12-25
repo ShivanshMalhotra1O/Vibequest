@@ -206,4 +206,41 @@ export function toBase64(arr: Uint8Array): string {
 	);
 }
 
-export type GameName = 'snake_game' | 'space_invaders' | 'chess' | '2048';
+export type GameName =
+	| 'snake_game'
+	| 'space_invaders'
+	| 'chess'
+	| '2048'
+	| 'car_game';
+
+export const games: Array<{
+	label: string;
+	key: GameName;
+	isLeaderboard: boolean;
+}> = [
+	{
+		label: 'Snake Game',
+		key: 'snake_game',
+		isLeaderboard: true,
+	},
+	{
+		label: 'Space Invaders',
+		key: 'space_invaders',
+		isLeaderboard: true,
+	},
+	{
+		label: 'Chess',
+		key: 'chess',
+		isLeaderboard: false,
+	},
+	{
+		label: '2048',
+		key: '2048',
+		isLeaderboard: true,
+	},
+	{
+		label: 'Car Game',
+		key: 'car_game',
+		isLeaderboard: true,
+	},
+];

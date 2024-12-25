@@ -101,20 +101,10 @@ export default function Nav() {
 								</div>
 							</DropdownTrigger>
 							<DropdownMenu>
-								<DropdownItem
-									key="profile"
-									onPress={() => {
-										window.location.href = '/profile';
-									}}
-								>
+								<DropdownItem key="profile" as={Link} href="/profile">
 									Profile
 								</DropdownItem>
-								<DropdownItem
-									key="leaderboard"
-									onPress={() => {
-										window.location.href = '/leaderboard';
-									}}
-								>
+								<DropdownItem key="leaderboard" as={Link} href="/leaderboard">
 									Leaderboard
 								</DropdownItem>
 								<DropdownItem
@@ -175,20 +165,10 @@ export default function Nav() {
 								<DropdownItem key="profile">
 									<p>Hi, {userData?.name}!</p>
 								</DropdownItem>
-								<DropdownItem
-									key="profile-page"
-									onPress={() => {
-										window.location.href = '/profile';
-									}}
-								>
+								<DropdownItem key="profile-page" as={Link} href="/profile">
 									<p>Profile</p>
 								</DropdownItem>
-								<DropdownItem
-									key="leaderboard"
-									onPress={() => {
-										window.location.href = '/leaderboard';
-									}}
-								>
+								<DropdownItem key="leaderboard" as={Link} href="/leaderboard">
 									<p>Leaderboard</p>
 								</DropdownItem>
 								<DropdownItem

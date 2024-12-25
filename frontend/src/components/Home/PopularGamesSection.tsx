@@ -22,35 +22,35 @@ const games = [
 		gameName: 'Snake Game',
 		gameImage: '/images/game-4.jpg',
 		gameDescription: 'A fun and engaging game that tests your reflexes.',
-		gameLink: '/games?game=snake-game',
+		gameLink: '/games/snake-game',
 	},
 	{
 		gameName: 'Space Invaders',
 		gameImage: '/images/game-5.jpg',
 		gameDescription:
 			'Space Shooter that challenges your reflexes and strategic thinking.',
-		gameLink: '/games?game=space-invaders',
+		gameLink: '/games/space-invaders',
 	},
 	{
 		gameName: '2048',
 		gameImage: '/images/game-6.jpg',
 		gameDescription:
 			'A classic game that requires logic, strategy, and patience.',
-		gameLink: '/games?game=2048',
+		gameLink: '/games/2048',
 	},
 	{
 		gameName: 'Chess',
 		gameImage: '/images/game-7.jpg',
 		gameDescription:
 			'A game of strategy and tactics where you control the movement of your pieces.',
-		gameLink: '/games?game=chess',
+		gameLink: '/games/chess',
 	},
 	{
 		gameName: 'Car Game',
 		gameImage: '/images/game-8.jpg',
 		gameDescription:
 			'A fun and exciting game that tests your reflexes and problem-solving skills.',
-		gameLink: '/games?game=car-game',
+		gameLink: '/games/car-game',
 	},
 ];
 export default function PopularGamesSection() {

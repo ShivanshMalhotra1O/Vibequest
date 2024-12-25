@@ -5,44 +5,31 @@ import asyncio
 
 class Game2048:
     def __init__(self):
-        # -----------------------------
-        # 1) SCALING AND SCREEN SETUP
-        # -----------------------------
-        # We'll use the Pyodide variables: speed for FPS, canvas for dimensions
         self.speed = pyodide.globals.get("speed")  # user-defined FPS
         canvas = pyodide.globals.get("canvas")
         width, height = canvas.width, canvas.height
         min_val = min(width, height)
 
-        # Use 500 here as the “reference dimension” (per your code).
         self.SCALE = min_val / 500.0
 
-        # Our original game was 400 wide x 500 high
         self.SCREEN_WIDTH = int(400 * self.SCALE)
         self.SCREEN_HEIGHT = int(500 * self.SCALE)
 
-        # Initialize Pygame and create the scaled window
         pygame.init()
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         pygame.display.set_caption("2048")
 
-        # Create the clock
         self.timer = pygame.time.Clock()
 
-        # -----------------------------
-        # 2) FONT AND SIZE CONSTANTS
-        # -----------------------------
         self.font_size = int(24 * self.SCALE)
         self.font = pygame.font.Font("freesansbold.ttf", self.font_size)
 
-        # Tile sizes and offsets
         self.tile_size = int(75 * self.SCALE)
         self.tile_offset = int(20 * self.SCALE)
         self.tile_gap = self.tile_size + self.tile_offset
 
         self.score_y1 = int(410 * self.SCALE)
 
-        # Colors
         self.colors = {
             0: (204, 192, 179),
             2: (238, 228, 218),
@@ -62,9 +49,6 @@ class Game2048:
             "bg": (187, 173, 160),
         }
 
-        # -----------------------------
-        # 3) GAME VARIABLES
-        # -----------------------------
         self.board_values = [[0 for _ in range(4)] for _ in range(4)]
         self.game_over = False
         self.spawn_new = True
@@ -72,14 +56,8 @@ class Game2048:
         self.direction = ""
         self.score = 0
 
-        # -----------------------------
-        # 4) MAIN LOOP CONTROL
-        # -----------------------------
         self.run_game = True
 
-    # -----------------------------
-    # 5) HELPER FUNCTIONS
-    # -----------------------------
     def draw_over(self):
         """Draw 'Game Over' plus 'Refresh to play again'."""
         rect_x = int(50 * self.SCALE)
@@ -89,11 +67,10 @@ class Game2048:
 
         pygame.draw.rect(self.screen, "black", [rect_x, rect_y, rect_w, rect_h], 0, 10)
 
-        # Notify Pyodide that game ended
-        pyodide.globals.get("setIsGameEnded")(True)
+        pyodide.globals.get("setGameStatus")("STOPPED")
 
         over_txt1 = self.font.render("Game Over!", True, "white")
-        over_txt2 = self.font.render("Refresh to play again", True, "white")
+        over_txt2 = self.font.render("Restart to play again", True, "white")
 
         self.screen.blit(
             over_txt1, (rect_x + int(80 * self.SCALE), rect_y + int(15 * self.SCALE))
@@ -191,7 +168,6 @@ class Game2048:
                         merged[i][4 - j + shift] = True
 
         self.score = s
-        pyodide.globals.get("setScore")(self.score)
         return board
 
     def new_pieces(self, board):
@@ -266,25 +242,19 @@ class Game2048:
                     )
                     self.screen.blit(value_text, text_rect)
 
-    # -----------------------------
-    # 6) MAIN LOOP
-    # -----------------------------
     async def run(self):
         while self.run_game:
             self.timer.tick(self.speed)
             self.screen.fill("gray")
 
-            # Draw background, scores, pieces
             self.draw_board()
             self.draw_pieces()
 
-            # Possibly spawn new tile
             if self.spawn_new or self.init_count < 2:
                 self.board_values, self.game_over = self.new_pieces(self.board_values)
                 self.spawn_new = False
                 self.init_count += 1
 
-            # If a direction has been chosen, take a turn
             if self.direction != "" and not self.game_over:
                 self.board_values = self.take_turn(self.direction, self.board_values)
                 self.direction = ""
@@ -292,24 +262,19 @@ class Game2048:
 
             if self.game_over:
                 self.draw_over()
+                pygame.display.flip()
+                return
 
-            # -----------------------------
-            # IGNORE KEYBOARD IF GAME OVER
-            # -----------------------------
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.run_game = False
-                elif event.type == pygame.KEYUP:
-                    # Only handle arrows if game is not over
-                    if not self.game_over:
-                        if event.key == pygame.K_UP:
-                            self.direction = "UP"
-                        elif event.key == pygame.K_DOWN:
-                            self.direction = "DOWN"
-                        elif event.key == pygame.K_LEFT:
-                            self.direction = "LEFT"
-                        elif event.key == pygame.K_RIGHT:
-                            self.direction = "RIGHT"
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_UP:
+                        self.direction = "UP"
+                    elif event.key == pygame.K_DOWN:
+                        self.direction = "DOWN"
+                    elif event.key == pygame.K_LEFT:
+                        self.direction = "LEFT"
+                    elif event.key == pygame.K_RIGHT:
+                        self.direction = "RIGHT"
 
             pygame.display.flip()
             await asyncio.sleep(0)
@@ -317,8 +282,14 @@ class Game2048:
         pygame.quit()
 
 
+game = Game2048()
+
+
+async def exit_game():
+    pygame.quit()
+
+
 async def main():
-    game = Game2048()
     await game.run()
 
 

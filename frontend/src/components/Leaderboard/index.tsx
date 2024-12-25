@@ -1,4 +1,4 @@
-import { GameName, useAllScores } from '@/utils';
+import { GameName, games, useAllScores } from '@/utils';
 import React from 'react';
 
 import {
@@ -13,25 +13,6 @@ import {
 	TableRow,
 } from '@nextui-org/react';
 import { format } from 'date-fns';
-
-const games: Array<{ label: string; key: GameName }> = [
-	{
-		label: 'Snake Game',
-		key: 'snake_game',
-	},
-	{
-		label: 'Space Invaders',
-		key: 'space_invaders',
-	},
-	{
-		label: 'Chess',
-		key: 'chess',
-	},
-	{
-		label: '2048',
-		key: '2048',
-	},
-];
 
 const pageSize = 10;
 export default function Leaderboard() {
@@ -50,7 +31,7 @@ export default function Leaderboard() {
 					<div className="flex gap-2">
 						<Autocomplete
 							label="Game"
-							defaultItems={games}
+							defaultItems={games.filter((game) => game.isLeaderboard)}
 							defaultSelectedKey={'snake_game'}
 							onSelectionChange={(key) => {
 								if (key) {
@@ -116,7 +97,7 @@ export default function Leaderboard() {
 										{item.score}
 									</TableCell>
 									<TableCell align="center">
-										{format(new Date(item.createdAt), 'dd/LL/yyyy hh:mm:ss b')}
+										{format(new Date(item.createdAt), 'dd/LL/yyyy hh:mm:ss a')}
 									</TableCell>
 								</TableRow>
 							)}

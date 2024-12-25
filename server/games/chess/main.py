@@ -4,31 +4,22 @@ import asyncio
 
 class ChessGame:
     def __init__(self):
-        # --------------------------------------------------
-        # SCALING LOGIC (like in the Space Invaders example)
-        # --------------------------------------------------
-        self.speed = pyodide.globals.get("speed")  # FPS from Pyodide
+        self.speed = pyodide.globals.get("speed")
         canvas = pyodide.globals.get("canvas")
         width, height = canvas.width, canvas.height
         min_val = min(width, height)
 
-        # Base reference: 800 wide
-        # Our "native" game is 1000×900, so we scale from 800 (to keep aspect ratio).
         self.SCALE = min_val / 1000.0
 
-        # Scale the window
         self.SCREEN_WIDTH = int(1000 * self.SCALE)
         self.SCREEN_HEIGHT = int(900 * self.SCALE)
 
-        # Each square was 100×100 in the original code
         self.SQUARE_SIZE = int(100 * self.SCALE)
 
         pygame.init()
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         pygame.display.set_caption("Two-Player Pygame Chess!")
 
-        # Fonts, Clock
-        # We'll also scale fonts so they look correct on smaller/larger screens
         font_size_small = int(20 * self.SCALE)
         font_size_medium = int(40 * self.SCALE)
         font_size_big = int(50 * self.SCALE)
@@ -38,7 +29,6 @@ class ChessGame:
 
         self.timer = pygame.time.Clock()
 
-        # Board/piece definitions
         self.white_pieces = [
             "rook",
             "knight",
@@ -114,7 +104,6 @@ class ChessGame:
         self.captured_pieces_white = []
         self.captured_pieces_black = []
 
-        # Turn states
         self.turn_step = 0
         self.selection = 100
         self.valid_moves = []
@@ -125,10 +114,8 @@ class ChessGame:
         self.winner = ""
         self.game_over = False
 
-        # Load images
         self.load_images()
 
-        # Pre-compute piece move options
         self.black_options = self.check_options(
             self.black_pieces, self.black_locations, "black"
         )
@@ -137,13 +124,8 @@ class ChessGame:
         )
 
     def load_images(self):
-        """Load and scale piece images for both sides."""
-        # Use the same filenames as your original code, but scale them.
-        # We'll define a helper to load & scale each piece:
-
         def load_and_scale(path, w, h):
             img = pygame.image.load(path).convert_alpha()
-            # Scale w×h by self.SCALE
             scaled_w = int(w * self.SCALE)
             scaled_h = int(h * self.SCALE)
             return pygame.transform.scale(img, (scaled_w, scaled_h))
@@ -227,111 +209,12 @@ class ChessGame:
             self.black_bishop_small,
         ]
 
-        # Must match this order in piece_list:
         self.piece_list = ["pawn", "queen", "king", "knight", "rook", "bishop"]
 
-    def new_game(self):
-        """Reset everything for a new game."""
-        self.game_over = False
-        self.winner = ""
-        self.white_pieces = [
-            "rook",
-            "knight",
-            "bishop",
-            "king",
-            "queen",
-            "bishop",
-            "knight",
-            "rook",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-        ]
-        self.white_locations = [
-            (0, 0),
-            (1, 0),
-            (2, 0),
-            (3, 0),
-            (4, 0),
-            (5, 0),
-            (6, 0),
-            (7, 0),
-            (0, 1),
-            (1, 1),
-            (2, 1),
-            (3, 1),
-            (4, 1),
-            (5, 1),
-            (6, 1),
-            (7, 1),
-        ]
-        self.black_pieces = [
-            "rook",
-            "knight",
-            "bishop",
-            "king",
-            "queen",
-            "bishop",
-            "knight",
-            "rook",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-            "pawn",
-        ]
-        self.black_locations = [
-            (0, 7),
-            (1, 7),
-            (2, 7),
-            (3, 7),
-            (4, 7),
-            (5, 7),
-            (6, 7),
-            (7, 7),
-            (0, 6),
-            (1, 6),
-            (2, 6),
-            (3, 6),
-            (4, 6),
-            (5, 6),
-            (6, 6),
-            (7, 6),
-        ]
-        self.captured_pieces_white = []
-        self.captured_pieces_black = []
-        self.turn_step = 0
-        self.selection = 100
-        self.valid_moves = []
-
-        self.black_options = self.check_options(
-            self.black_pieces, self.black_locations, "black"
-        )
-        self.white_options = self.check_options(
-            self.white_pieces, self.white_locations, "white"
-        )
-
     def draw_board(self):
-        """Draw scaled board & lines."""
-        # We have 8 rows of squares (0..7). But your code drew 32 squares in a pattern.
-        # We'll replicate that logic, but scaled by self.SQUARE_SIZE.
-
-        # Each "row" is 100 px tall => self.SQUARE_SIZE tall
-        # Each "column" is 100 px wide => self.SQUARE_SIZE wide
         for i in range(32):
             column = i % 4
             row = i // 4
-            # The x,y for each "light gray" square depends on the row/column pattern
-            # Original used 600, 700 offsets. We'll scale them:
-            # left_x = 600 - (column*200) => int(600*self.SCALE) - (column * 2*SQUARE_SIZE)
             left_x = int(6 * self.SQUARE_SIZE) - (column * 2 * self.SQUARE_SIZE)
             top_y = row * self.SQUARE_SIZE
 
@@ -341,7 +224,6 @@ class ChessGame:
                 [left_x, top_y, self.SQUARE_SIZE, self.SQUARE_SIZE],
             )
 
-        # Bottom bar
         pygame.draw.rect(
             self.screen,
             "gray",
@@ -364,7 +246,6 @@ class ChessGame:
             5,
         )
 
-        # Right bar
         pygame.draw.rect(
             self.screen,
             "gold",
@@ -388,9 +269,7 @@ class ChessGame:
             (int(20 * self.SCALE), int(820 * self.SCALE)),
         )
 
-        # Lines across the board
         for i in range(9):
-            # horizontal lines
             pygame.draw.line(
                 self.screen,
                 "black",
@@ -398,7 +277,6 @@ class ChessGame:
                 (8 * self.SQUARE_SIZE, i * self.SQUARE_SIZE),
                 2,
             )
-            # vertical lines
             pygame.draw.line(
                 self.screen,
                 "black",
@@ -407,7 +285,6 @@ class ChessGame:
                 2,
             )
 
-        # "FORFEIT" text (like button) at scaled location
         self.screen.blit(
             self.medium_font.render("FORFEIT", True, "black"),
             (int(810 * self.SCALE), int(830 * self.SCALE)),
@@ -419,9 +296,7 @@ class ChessGame:
             loc = self.white_locations[i]
             index = self.piece_list.index(piece_type)
 
-            # If it's a pawn, offset is different
             if piece_type == "pawn":
-                # e.g. was loc[0]*100 + 22 => loc[0]*self.SQUARE_SIZE + int(22*self.SCALE)
                 x_offset = int(22 * self.SCALE)
                 y_offset = int(30 * self.SCALE)
                 self.screen.blit(
@@ -442,7 +317,6 @@ class ChessGame:
                     ),
                 )
 
-            # highlight
             if self.turn_step < 2 and self.selection == i:
                 pygame.draw.rect(
                     self.screen,
@@ -481,7 +355,6 @@ class ChessGame:
                     ),
                 )
 
-            # highlight
             if self.turn_step >= 2 and self.selection == i:
                 pygame.draw.rect(
                     self.screen,
@@ -497,15 +370,12 @@ class ChessGame:
 
     def draw_captured(self):
         """Draw small icons for captured pieces at the right side."""
-        # White’s captures (i.e. black pieces captured by white)
         for i, captured_piece in enumerate(self.captured_pieces_white):
             index = self.piece_list.index(captured_piece)
-            # e.g. (825, 5 + 50*i) => scale them
             x = int(825 * self.SCALE)
             y = int(5 * self.SCALE) + int(50 * self.SCALE) * i
             self.screen.blit(self.small_black_images[index], (x, y))
 
-        # Black’s captures (i.e. white pieces captured by black)
         for i, captured_piece in enumerate(self.captured_pieces_black):
             index = self.piece_list.index(captured_piece)
             x = int(925 * self.SCALE)
@@ -521,7 +391,7 @@ class ChessGame:
                 king_loc = self.white_locations[king_idx]
                 for moves in self.black_options:
                     if king_loc in moves:
-                        if self.counter < 15:  # flash half the time
+                        if self.counter < 15:
                             pygame.draw.rect(
                                 self.screen,
                                 "dark red",
@@ -534,7 +404,6 @@ class ChessGame:
                                 5,
                             )
         else:
-            # black's turn
             if "king" in self.black_pieces:
                 king_idx = self.black_pieces.index("king")
                 king_loc = self.black_locations[king_idx]
@@ -574,7 +443,7 @@ class ChessGame:
             (rect_x + int(10 * self.SCALE), rect_y + int(10 * self.SCALE)),
         )
         self.screen.blit(
-            self.font.render(f"Refresh to play again", True, "white"),
+            self.font.render(f"Restart to play again", True, "white"),
             (rect_x + int(10 * self.SCALE), rect_y + int(40 * self.SCALE)),
         )
 
@@ -585,7 +454,6 @@ class ChessGame:
         else:
             return self.black_options[self.selection]
 
-    # ------ Piece-based logic ------
     def check_options(self, pieces, locations, turn_color):
         all_moves = []
         for i, piece in enumerate(pieces):
@@ -679,7 +547,6 @@ class ChessGame:
     def check_pawn(self, position, color):
         moves_list = []
         if color == "white":
-            # forward
             if (
                 (position[0], position[1] + 1) not in self.white_locations
                 and (position[0], position[1] + 1) not in self.black_locations
@@ -692,13 +559,11 @@ class ChessGame:
                 and position[1] == 1
             ):
                 moves_list.append((position[0], position[1] + 2))
-            # captures
             if (position[0] + 1, position[1] + 1) in self.black_locations:
                 moves_list.append((position[0] + 1, position[1] + 1))
             if (position[0] - 1, position[1] + 1) in self.black_locations:
                 moves_list.append((position[0] - 1, position[1] + 1))
         else:
-            # forward
             if (
                 (position[0], position[1] - 1) not in self.white_locations
                 and (position[0], position[1] - 1) not in self.black_locations
@@ -744,13 +609,11 @@ class ChessGame:
                 moves_list.append((tx, ty))
         return moves_list
 
-    # ---------- MAIN LOOP ----------
     async def run(self):
         """Run the main game loop asynchronously."""
         self.run_game = True
         while self.run_game:
-            self.timer.tick(self.speed)  # use speed from Pyodide
-            # Flash logic
+            self.timer.tick(self.speed)
             self.counter = (self.counter + 1) % 30
 
             self.screen.fill("dark gray")
@@ -763,10 +626,7 @@ class ChessGame:
                 self.valid_moves = self.check_valid_moves()
                 self.draw_valid(self.valid_moves)
 
-            # ----- EVENT HANDLING -----
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.run_game = False
                 if (
                     event.type == pygame.MOUSEBUTTONDOWN
                     and event.button == 1
@@ -774,25 +634,22 @@ class ChessGame:
                 ):
                     self.handle_mouse_click(event)
 
-            # If we have a winner
             if self.winner != "":
                 self.game_over = True
                 self.draw_game_over()
+                pygame.display.flip()
+                await asyncio.sleep(0)
+                return
 
             pygame.display.flip()
             await asyncio.sleep(0)
-
-        pygame.quit()
 
     def handle_mouse_click(self, event):
         x_coord = event.pos[0] // self.SQUARE_SIZE
         y_coord = event.pos[1] // self.SQUARE_SIZE
         click_coords = (x_coord, y_coord)
 
-        # White's turn
         if self.turn_step <= 1:
-            # Forfeit check
-            # originally (8,8) or (9,8) => we have 8 squares across
             if click_coords in [(8, 8), (9, 8)]:
                 self.winner = "black"
                 return
@@ -822,7 +679,6 @@ class ChessGame:
                 self.selection = 100
                 self.valid_moves = []
 
-        # Black's turn
         else:
             if click_coords in [(8, 8), (9, 8)]:
                 self.winner = "white"
@@ -854,11 +710,15 @@ class ChessGame:
                 self.valid_moves = []
 
 
-# ------------------ ASYNC MAIN FUNCTION ------------------
+game = ChessGame()
+
+
+async def exit_game():
+    pygame.quit()
+
+
 async def main():
-    game = ChessGame()
     await game.run()
 
 
-# In Pyodide, just calling main() will start the loop:
 main()

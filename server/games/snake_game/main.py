@@ -7,7 +7,6 @@ import asyncio
 
 pygame.init()
 
-# Dynamically calculate based on canvas size
 speed = pyodide.globals.get("speed")
 canvas = pyodide.globals.get("canvas")
 width, height = canvas.width, canvas.height
@@ -59,7 +58,6 @@ class Food:
         return position
 
 
-# Class for Snake
 class Snake:
     def __init__(self):
         self.body = [Vector2(6, 9), Vector2(5, 9), Vector2(4, 9)]

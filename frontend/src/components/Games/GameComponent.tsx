@@ -19,7 +19,11 @@ export default function GameComponent({
 	toUpdateLeaderboard?: boolean;
 }) {
 	const canvasRef = React.useRef<HTMLCanvasElement>(null);
-	const packages = React.useMemo(() => ['pygame-ce'], []);
+	const packages = React.useMemo(() => ['micropip', 'pygame-ce'], []);
+	const micropipPackages = React.useMemo(
+		() => (gameName === 'vampire-survival' ? ['pytmx'] : []),
+		[gameName]
+	);
 	const [speed, setSpeed] = React.useState(60);
 	const [canvasSize, setCanvasSize] = React.useState(500);
 	const [gameState, setGameStatus] = React.useState<GameStatus>('INITIAL');
@@ -28,7 +32,8 @@ export default function GameComponent({
 
 	const { pyodide, isLoading } = usePyodide(
 		import.meta.env.VITE_PYODIDE_URL,
-		packages
+		packages,
+		micropipPackages
 	);
 
 	const updateScoreMuttaion = useUpdateScoreMutation();

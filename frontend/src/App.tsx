@@ -84,6 +84,15 @@ function App() {
 						<GameComponent gameName="chess" toUpdateLeaderboard={false} />
 					}
 				/>
+				<Route
+					path="/games/vampire-survival"
+					element={
+						<GameComponent
+							gameName="vampire-survival"
+							toUpdateLeaderboard={false}
+						/>
+					}
+				/>
 				{/* <Route path="/games/donkey-kong" element={<DonkeyKong />} /> */}
 				{/* <Route path="/games/pacman" element={<Pacman />} /> */}
 			</Routes>

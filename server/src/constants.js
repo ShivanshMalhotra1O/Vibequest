@@ -6,4 +6,5 @@ export const games = [
 	'car_game',
 	'coin_quest',
 	'tetris',
+	'vampire-survival',
 ];

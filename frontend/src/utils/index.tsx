@@ -213,7 +213,8 @@ export type GameName =
 	| '2048'
 	| 'car_game'
 	| 'coin_quest'
-	| 'tetris';
+	| 'tetris'
+	| 'vampire-survival';
 
 export const games: Array<{
 	label: string;
@@ -254,5 +255,10 @@ export const games: Array<{
 		label: 'Tetris',
 		key: 'tetris',
 		isLeaderboard: true,
+	},
+	{
+		label: 'Vampire Survival',
+		key: 'vampire-survival',
+		isLeaderboard: false,
 	},
 ];

@@ -1,4 +1,9 @@
-const games = [
+const games: Array<{
+	gameName: string;
+	gameImage: string;
+	gameDescription: string;
+	gameLink: string;
+}> = [
 	{
 		gameName: 'Coin Quest',
 		gameImage: '/images/game-1.jpg',
@@ -59,7 +64,15 @@ const games = [
 			'A classic arcade game that has been entertaining for decades.',
 		gameLink: '/games?game=pacman',
 	},
+	{
+		gameName: 'Vampire Survival',
+		gameImage: '/images/game-10.png',
+		gameDescription:
+			'A challenging and engaging game that tests your reflexes and problem-solving skills.',
+		gameLink: '/games/vampire-survival',
+	},
 ];
+
 export default function PopularGamesSection() {
 	return (
 		<div

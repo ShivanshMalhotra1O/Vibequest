@@ -211,7 +211,8 @@ export type GameName =
 	| 'space_invaders'
 	| 'chess'
 	| '2048'
-	| 'car_game';
+	| 'car_game'
+	| 'coin_quest';
 
 export const games: Array<{
 	label: string;
@@ -241,6 +242,11 @@ export const games: Array<{
 	{
 		label: 'Car Game',
 		key: 'car_game',
+		isLeaderboard: true,
+	},
+	{
+		label: 'Coin Quest',
+		key: 'coin_quest',
 		isLeaderboard: true,
 	},
 ];

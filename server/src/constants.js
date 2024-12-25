@@ -4,4 +4,5 @@ export const games = [
 	'chess',
 	'2048',
 	'car_game',
+	'coin_quest',
 ];

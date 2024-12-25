@@ -66,20 +66,22 @@ function App() {
 					element={<GameComponent gameName="space_invaders" />}
 				/>
 				<Route
+					path="/games/car-game"
+					element={<GameComponent gameName="car_game" />}
+				/>
+				<Route
+					path="/games/coin-quest"
+					element={<GameComponent gameName="coin_quest" />}
+				/>
+
+				<Route
 					path="/games/chess"
 					element={
 						<GameComponent gameName="chess" toUpdateLeaderboard={false} />
 					}
 				/>
-				<Route
-					path="/games/car_game"
-					element={<GameComponent gameName="car_game" />}
-				/>
-
-				{/* <Route path="/games/coin-quest" element={<CoinQuest />} /> */}
 				{/* <Route path="/games/donkey-kong" element={<DonkeyKong />} /> */}
 				{/* <Route path="/games/pacman" element={<Pacman />} /> */}
-				{/* <Route path="/games/space-invaders" element={<SpaceInvaders />} /> */}
 			</Routes>
 			<Footer />
 			<Toaster richColors />

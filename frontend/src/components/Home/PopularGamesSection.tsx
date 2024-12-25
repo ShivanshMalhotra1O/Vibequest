@@ -3,7 +3,7 @@ const games = [
 		gameName: 'Coin Quest',
 		gameImage: '/images/game-1.jpg',
 		gameDescription: 'Action-packed and full of adventure.',
-		gameLink: '/games?game=coin-quest',
+		gameLink: '/games/coin-quest',
 	},
 	{
 		gameName: 'Donkey Kong',

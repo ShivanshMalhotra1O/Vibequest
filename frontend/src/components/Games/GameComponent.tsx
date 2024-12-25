@@ -137,31 +137,33 @@ export default function GameComponent({
 							</button>
 						</div>
 					</div>
-					<div className="flex flex-col items-center">
-						<p className="text-xl font-bold whitespace-nowrap">
-							Size: {canvasSize}px
-						</p>
-						<div className="flex gap-2">
-							<button
-								className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
-								onClick={() => {
-									setCanvasSize((prevCanvasSize) => prevCanvasSize + 50);
-								}}
-								disabled={gameState === 'RUNNING'}
-							>
-								+
-							</button>
-							<button
-								className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
-								onClick={() => {
-									setCanvasSize((prevCanvasSize) => prevCanvasSize - 50);
-								}}
-								disabled={gameState === 'RUNNING'}
-							>
-								-
-							</button>
+					{gameName !== 'vampire-survival' && (
+						<div className="flex flex-col items-center">
+							<p className="text-xl font-bold whitespace-nowrap">
+								Size: {canvasSize}px
+							</p>
+							<div className="flex gap-2">
+								<button
+									className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
+									onClick={() => {
+										setCanvasSize((prevCanvasSize) => prevCanvasSize + 50);
+									}}
+									disabled={gameState === 'RUNNING'}
+								>
+									+
+								</button>
+								<button
+									className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
+									onClick={() => {
+										setCanvasSize((prevCanvasSize) => prevCanvasSize - 50);
+									}}
+									disabled={gameState === 'RUNNING'}
+								>
+									-
+								</button>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 				<div id="canvas-container">
 					<canvas

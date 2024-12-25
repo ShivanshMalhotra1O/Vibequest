@@ -10,6 +10,8 @@ import cors from 'cors';
 import express from 'express';
 
 // Routes
+import gameRouter from './routes/games.js';
+import scoreRouter from './routes/scores.js';
 import userRouter from './routes/user.js';
 
 const PORT = process.env.PORT ?? 3000;
@@ -29,6 +31,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/games', gameRouter);
+app.use('/scores', scoreRouter);
 
 console.log('Starting server...');
 app.listen(PORT, () => {

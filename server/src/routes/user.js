@@ -61,7 +61,14 @@ userRouter.post('/signup', upload.single('image'), async (req, res) => {
 
 		const userId = newUser._id;
 
-		const token = jwt.sign({ userId }, JWT_SECRET);
+		const token = jwt.sign(
+			{
+				userId: userId,
+				name: newUser.name,
+				username: newUser.username,
+			},
+			JWT_SECRET
+		);
 
 		res.cookie('token', token, {
 			secure: true,
@@ -99,7 +106,14 @@ userRouter.post('/login', async (req, res) => {
 			return res.status(400).json({ message: 'Incorrect password!' });
 		}
 
-		const token = jwt.sign({ userId: user._id }, JWT_SECRET);
+		const token = jwt.sign(
+			{
+				userId: user._id,
+				name: user.name,
+				username: user.username,
+			},
+			JWT_SECRET
+		);
 
 		res.cookie('token', token, {
 			secure: true,
@@ -122,13 +136,9 @@ userRouter.post('/logout', async (req, res) => {
 	res.json({ message: 'Logged out successfully!' });
 });
 
-userRouter.get('/', async (req, res) => {
+userRouter.get('/', requireAuth, async (req, res) => {
 	try {
-		const token = req.cookies.token;
-		if (!token) {
-			return res.status(401).json({ message: 'Unauthorized!' });
-		}
-		const { userId } = jwt.verify(token, JWT_SECRET);
+		const { userId } = req.user;
 		const user = await UserModel.findById(userId);
 		res.json({
 			id: user._id,
@@ -142,5 +152,15 @@ userRouter.get('/', async (req, res) => {
 		res.status(500).json({ message: 'Internal server error!' });
 	}
 });
+
+export function requireAuth(req, res, next) {
+	const token = req.cookies.token;
+	if (token === undefined) return res.sendStatus(401);
+	jwt.verify(token, JWT_SECRET, (err, user) => {
+		if (err) return res.sendStatus(403);
+		req.user = user;
+		next();
+	});
+}
 
 export default userRouter;

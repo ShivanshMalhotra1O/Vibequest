@@ -1,39 +1,40 @@
-from fastapi import FastAPI, WebSocket
-from fastapi.middleware.cors import CORSMiddleware
-import cv2
-from deepface import DeepFace
-import numpy as np
 import base64
 import json
 
+import cv2
+import numpy as np
+from deepface import DeepFace
+from fastapi import FastAPI, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
+CORSMiddleware(
+    app=app,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 # Load face cascade classifier
-face_cascade = cv2.CascadeClassifier(
-    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-)
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 
 @app.websocket("/ws/detect-emotion/")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     try:
+
         while True:
             # Receive data (base64 image) from the client
             data = await websocket.receive_text()
             image_data = base64.b64decode(data)
 
             # Convert the image data to NumPy array
-            nparr = np.frombuffer(image_data, np.uint8)
-            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            np_arr = np.frombuffer(image_data, np.uint8)
+            frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
             # Convert frame to grayscale
             gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

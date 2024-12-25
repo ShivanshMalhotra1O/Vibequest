@@ -36,6 +36,7 @@ export default function Leaderboard() {
 							onSelectionChange={(key) => {
 								if (key) {
 									setGameName(key as GameName);
+									setCurrentPage(1);
 								}
 							}}
 						>

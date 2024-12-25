@@ -6,19 +6,6 @@ const games = [
 		gameLink: '/games/coin-quest',
 	},
 	{
-		gameName: 'Donkey Kong',
-		gameImage: '/images/game-2.jpg',
-		gameDescription: 'A thrilling puzzle game to challenge your mind.',
-		gameLink: '/games?game=donkey-kong',
-	},
-	{
-		gameName: 'Pacman',
-		gameImage: '/images/game-3.jpg',
-		gameDescription:
-			'A classic arcade game that has been entertaining for decades.',
-		gameLink: '/games?game=pacman',
-	},
-	{
 		gameName: 'Snake Game',
 		gameImage: '/images/game-4.jpg',
 		gameDescription: 'A fun and engaging game that tests your reflexes.',
@@ -51,6 +38,26 @@ const games = [
 		gameDescription:
 			'A fun and exciting game that tests your reflexes and problem-solving skills.',
 		gameLink: '/games/car-game',
+	},
+	{
+		gameName: 'Tetris',
+		gameImage: '/images/game-9.png',
+		gameDescription:
+			"One of the most popular and challenging games of all time. It's a classic!",
+		gameLink: '/games/tetris',
+	},
+	{
+		gameName: 'Donkey Kong',
+		gameImage: '/images/game-2.jpg',
+		gameDescription: 'A thrilling puzzle game to challenge your mind.',
+		gameLink: '/games?game=donkey-kong',
+	},
+	{
+		gameName: 'Pacman',
+		gameImage: '/images/game-3.jpg',
+		gameDescription:
+			'A classic arcade game that has been entertaining for decades.',
+		gameLink: '/games?game=pacman',
 	},
 ];
 export default function PopularGamesSection() {

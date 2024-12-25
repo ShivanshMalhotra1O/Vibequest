@@ -73,6 +73,10 @@ function App() {
 					path="/games/coin-quest"
 					element={<GameComponent gameName="coin_quest" />}
 				/>
+				<Route
+					path="/games/tetris"
+					element={<GameComponent gameName="tetris" />}
+				/>
 
 				<Route
 					path="/games/chess"

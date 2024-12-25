@@ -212,7 +212,8 @@ export type GameName =
 	| 'chess'
 	| '2048'
 	| 'car_game'
-	| 'coin_quest';
+	| 'coin_quest'
+	| 'tetris';
 
 export const games: Array<{
 	label: string;
@@ -247,6 +248,11 @@ export const games: Array<{
 	{
 		label: 'Coin Quest',
 		key: 'coin_quest',
+		isLeaderboard: true,
+	},
+	{
+		label: 'Tetris',
+		key: 'tetris',
 		isLeaderboard: true,
 	},
 ];

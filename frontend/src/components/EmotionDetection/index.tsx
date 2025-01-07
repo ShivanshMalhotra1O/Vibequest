@@ -54,7 +54,10 @@ export default function EmotionDetection() {
 		if (webcamRef.current && socket && socket.readyState === WebSocket.OPEN) {
 			const imageSrc = webcamRef.current.getScreenshot();
 
-			const base64Data = imageSrc?.split(',')[1] ?? '';
+			const base64Data = imageSrc?.split(',')[1];
+			if (!base64Data) {
+				return;
+			}
 			socket.send(base64Data);
 		}
 	}, [socket]);

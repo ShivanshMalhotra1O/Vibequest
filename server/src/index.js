@@ -21,7 +21,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: ['https://minor-project.mukund.page', 'http://localhost:5173'],
+		origin: [
+			'https://minor-project.mukund.page',
+			'http://localhost:5173',
+			'https://localhost:5173',
+			'http://192.168.29.49:5173',
+			'https://192.168.29.49:5173',
+		],
 		credentials: true,
 	})
 );

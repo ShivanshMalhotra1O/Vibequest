@@ -76,7 +76,7 @@ export default function EmotionDetection() {
 			<h1 className="mb-5 text-4xl font-bold text-gray-800">
 				Real-Time Emotion Detection
 			</h1>
-			<div className="w-4/5 max-w-4xl mb-8 overflow-hidden rounded-lg shadow-md aspect-video">
+			<div className="w-full md:w-4/5 max-w-4xl mb-8 overflow-hidden rounded-lg shadow-md aspect-square md:aspect-video">
 				<Webcam
 					ref={webcamRef}
 					screenshotFormat="image/jpeg"

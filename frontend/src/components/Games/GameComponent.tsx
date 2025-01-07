@@ -14,9 +14,13 @@ type GameStatus = 'RUNNING' | 'STOPPED' | 'ENDED' | 'INITIAL';
 export default function GameComponent({
 	gameName,
 	toUpdateLeaderboard = true,
+	initialSpeed = 60,
+	showSpeed = true,
 }: {
 	gameName: GameName;
 	toUpdateLeaderboard?: boolean;
+	initialSpeed?: number;
+	showSpeed?: boolean;
 }) {
 	const canvasRef = React.useRef<HTMLCanvasElement>(null);
 	const packages = React.useMemo(() => ['micropip', 'pygame-ce'], []);
@@ -24,7 +28,7 @@ export default function GameComponent({
 		() => (gameName === 'vampire-survival' ? ['pytmx'] : []),
 		[gameName]
 	);
-	const [speed, setSpeed] = React.useState(60);
+	const [speed, setSpeed] = React.useState(initialSpeed);
 	const [canvasSize, setCanvasSize] = React.useState(500);
 	const [gameState, setGameStatus] = React.useState<GameStatus>('INITIAL');
 
@@ -114,29 +118,31 @@ export default function GameComponent({
 							</p>
 						</div>
 					</div>
-					<div className="flex flex-col items-center">
-						<p className="text-xl font-bold">Speed:{speed}</p>
-						<div className="flex gap-2">
-							<button
-								className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
-								onClick={() => {
-									setSpeed((prevSpeed) => prevSpeed + 10);
-								}}
-								disabled={gameState === 'RUNNING'}
-							>
-								+
-							</button>
-							<button
-								className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
-								onClick={() => {
-									setSpeed((prevSpeed) => prevSpeed - 10);
-								}}
-								disabled={gameState === 'RUNNING'}
-							>
-								-
-							</button>
+					{showSpeed && (
+						<div className="flex flex-col items-center">
+							<p className="text-xl font-bold">Speed:{speed}</p>
+							<div className="flex gap-2">
+								<button
+									className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
+									onClick={() => {
+										setSpeed((prevSpeed) => prevSpeed + 10);
+									}}
+									disabled={gameState === 'RUNNING'}
+								>
+									+
+								</button>
+								<button
+									className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 disabled:bg-gray-400"
+									onClick={() => {
+										setSpeed((prevSpeed) => prevSpeed - 10);
+									}}
+									disabled={gameState === 'RUNNING'}
+								>
+									-
+								</button>
+							</div>
 						</div>
-					</div>
+					)}
 					{gameName !== 'vampire-survival' && (
 						<div className="flex flex-col items-center">
 							<p className="text-xl font-bold whitespace-nowrap">

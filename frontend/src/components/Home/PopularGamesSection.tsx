@@ -1,78 +1,3 @@
-const games: Array<{
-	gameName: string;
-	gameImage: string;
-	gameDescription: string;
-	gameLink: string;
-}> = [
-	{
-		gameName: 'Coin Quest',
-		gameImage: '/images/game-1.jpg',
-		gameDescription: 'Action-packed and full of adventure.',
-		gameLink: '/games/coin-quest',
-	},
-	{
-		gameName: 'Snake Game',
-		gameImage: '/images/game-4.jpg',
-		gameDescription: 'A fun and engaging game that tests your reflexes.',
-		gameLink: '/games/snake-game',
-	},
-	{
-		gameName: 'Space Invaders',
-		gameImage: '/images/game-5.jpg',
-		gameDescription:
-			'Space Shooter that challenges your reflexes and strategic thinking.',
-		gameLink: '/games/space-invaders',
-	},
-	{
-		gameName: '2048',
-		gameImage: '/images/game-6.jpg',
-		gameDescription:
-			'A classic game that requires logic, strategy, and patience.',
-		gameLink: '/games/2048',
-	},
-	{
-		gameName: 'Chess',
-		gameImage: '/images/game-7.jpg',
-		gameDescription:
-			'A game of strategy and tactics where you control the movement of your pieces.',
-		gameLink: '/games/chess',
-	},
-	{
-		gameName: 'Car Game',
-		gameImage: '/images/game-8.jpg',
-		gameDescription:
-			'A fun and exciting game that tests your reflexes and problem-solving skills.',
-		gameLink: '/games/car-game',
-	},
-	{
-		gameName: 'Tetris',
-		gameImage: '/images/game-9.png',
-		gameDescription:
-			"One of the most popular and challenging games of all time. It's a classic!",
-		gameLink: '/games/tetris',
-	},
-	{
-		gameName: 'Donkey Kong',
-		gameImage: '/images/game-2.jpg',
-		gameDescription: 'A thrilling puzzle game to challenge your mind.',
-		gameLink: '/games?game=donkey-kong',
-	},
-	{
-		gameName: 'Pacman',
-		gameImage: '/images/game-3.jpg',
-		gameDescription:
-			'A classic arcade game that has been entertaining for decades.',
-		gameLink: '/games?game=pacman',
-	},
-	{
-		gameName: 'Vampire Survival',
-		gameImage: '/images/game-10.png',
-		gameDescription:
-			'A challenging and engaging game that tests your reflexes and problem-solving skills.',
-		gameLink: '/games/vampire-survival',
-	},
-];
-
 export default function PopularGamesSection() {
 	return (
 		<div
@@ -83,7 +8,7 @@ export default function PopularGamesSection() {
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
 				{games.map((game) => (
 					<GameCard
-						key={game.gameName}
+						key={game.gameId}
 						gameName={game.gameName}
 						gameImage={game.gameImage}
 						gameDescription={game.gameDescription}
@@ -95,9 +20,10 @@ export default function PopularGamesSection() {
 	);
 }
 
+import { games } from '@/data/games';
 import { Button, Card, CardBody, CardHeader } from '@nextui-org/react';
 
-function GameCard({
+export function GameCard({
 	gameName,
 	gameImage,
 	gameDescription,

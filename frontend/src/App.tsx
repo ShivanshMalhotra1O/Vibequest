@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar';
 
 import AboutPage from '@/components/About';
 import EmotionDetection from '@/components/EmotionDetection';
+import EmotionGamePage from '@/components/EmotionDetection/EmotionGamePage';
+import EmotionPage from '@/components/EmotionDetection/EmotionPage';
 import HomePage from '@/components/Home';
 import LoginPage from '@/components/Login';
 import Parallax from '@/components/Parallax';
@@ -51,6 +53,8 @@ function App() {
 				<Route path="/about" element={<AboutPage />} />
 				<Route path="/profile" element={<ProfilePage />} />
 				<Route path="/emotion-detection" element={<EmotionDetection />} />
+				<Route path="/emotion/:emotion" element={<EmotionPage />} />
+				<Route path="/emotion/:emotion/:gameId" element={<EmotionGamePage />} />
 
 				<Route path="/leaderboard" element={<Leaderboard />} />
 
@@ -58,20 +62,20 @@ function App() {
 
 				<Route
 					path="/games/snake-game"
-					element={<GameComponent gameName="snake_game" />}
+					element={<GameComponent gameName="snake-game" />}
 				/>
 				<Route path="/games/2048" element={<GameComponent gameName="2048" />} />
 				<Route
 					path="/games/space-invaders"
-					element={<GameComponent gameName="space_invaders" />}
+					element={<GameComponent gameName="space-invaders" />}
 				/>
 				<Route
 					path="/games/car-game"
-					element={<GameComponent gameName="car_game" />}
+					element={<GameComponent gameName="car-game" />}
 				/>
 				<Route
 					path="/games/coin-quest"
-					element={<GameComponent gameName="coin_quest" />}
+					element={<GameComponent gameName="coin-quest" />}
 				/>
 				<Route
 					path="/games/tetris"

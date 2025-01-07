@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import Webcam from 'react-webcam';
 
 // const SOCKET_URL = 'ws://127.0.0.1:8000/ws/detect-emotion/';
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 export default function EmotionDetection() {
-	const webcamRef = useRef(null);
-	const [detections, setDetections] = useState([]);
-	const [socket, setSocket] = useState(null);
+	const navigate = useNavigate();
+	const webcamRef = useRef<Webcam>(null);
+	const [detection, setDetection] = useState('');
+	const [socket, setSocket] = useState<WebSocket | null>(null);
 
 	useEffect(() => {
 		const ws = new WebSocket(SOCKET_URL);
@@ -18,11 +20,25 @@ export default function EmotionDetection() {
 	}, []);
 
 	useEffect(() => {
+		const timeout = setTimeout(() => {
+			if (detection) {
+				alert(
+					`Emotion detected: ${
+						detection[0].toUpperCase() + detection.slice(1)
+					}, Suggesting Games!!`
+				);
+				navigate(`/emotion/${detection.toLowerCase()}`);
+			}
+		}, 500);
+		return () => clearTimeout(timeout);
+	}, [detection, navigate]);
+
+	useEffect(() => {
 		if (socket) {
 			socket.onmessage = (event) => {
 				const data = JSON.parse(event.data);
 				if (data.faces) {
-					setDetections(data.faces.map((face) => face.emotion));
+					setDetection(data.faces?.[0].emotion as string);
 				} else if (data.error) {
 					console.error('Error:', data.error);
 				}
@@ -38,7 +54,7 @@ export default function EmotionDetection() {
 		if (webcamRef.current && socket && socket.readyState === WebSocket.OPEN) {
 			const imageSrc = webcamRef.current.getScreenshot();
 
-			const base64Data = imageSrc.split(',')[1];
+			const base64Data = imageSrc?.split(',')[1] ?? '';
 			socket.send(base64Data);
 		}
 	}, [socket]);
@@ -48,8 +64,12 @@ export default function EmotionDetection() {
 			sendFrame();
 		}, 500);
 
+		if (detection) {
+			clearInterval(interval);
+		}
+
 		return () => clearInterval(interval);
-	}, [socket, sendFrame]);
+	}, [socket, sendFrame, detection]);
 
 	return (
 		<div className="box-border flex flex-col items-center min-h-[calc(100dvh-157px)] p-5 bg-gray-100">
@@ -68,12 +88,8 @@ export default function EmotionDetection() {
 					Detected Emotions:
 				</h2>
 				<ul className="p-0 m-0 uppercase list-none">
-					{detections.length > 0 ? (
-						detections.map((emotion, index) => (
-							<li key={index} className="my-1 text-lg text-gray-700">
-								{emotion}
-							</li>
-						))
+					{detection ? (
+						<li className="my-1 text-lg text-gray-700">{detection}</li>
 					) : (
 						<li className="my-1 text-lg text-gray-700">No emotions detected</li>
 					)}

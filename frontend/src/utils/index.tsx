@@ -207,12 +207,12 @@ export function toBase64(arr: Uint8Array): string {
 }
 
 export type GameName =
-	| 'snake_game'
-	| 'space_invaders'
+	| 'snake-game'
+	| 'space-invaders'
 	| 'chess'
 	| '2048'
-	| 'car_game'
-	| 'coin_quest'
+	| 'car-game'
+	| 'coin-quest'
 	| 'tetris'
 	| 'vampire-survival';
 
@@ -223,12 +223,12 @@ export const games: Array<{
 }> = [
 	{
 		label: 'Snake Game',
-		key: 'snake_game',
+		key: 'snake-game',
 		isLeaderboard: true,
 	},
 	{
 		label: 'Space Invaders',
-		key: 'space_invaders',
+		key: 'space-invaders',
 		isLeaderboard: true,
 	},
 	{
@@ -243,12 +243,12 @@ export const games: Array<{
 	},
 	{
 		label: 'Car Game',
-		key: 'car_game',
+		key: 'car-game',
 		isLeaderboard: true,
 	},
 	{
 		label: 'Coin Quest',
-		key: 'coin_quest',
+		key: 'coin-quest',
 		isLeaderboard: true,
 	},
 	{

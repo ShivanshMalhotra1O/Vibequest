@@ -1,10 +1,10 @@
 export const games = [
-	'snake_game',
-	'space_invaders',
+	'snake-game',
+	'space-invaders',
 	'chess',
 	'2048',
-	'car_game',
-	'coin_quest',
+	'car-game',
+	'coin-quest',
 	'tetris',
 	'vampire-survival',
 ];

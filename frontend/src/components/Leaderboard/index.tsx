@@ -16,7 +16,7 @@ import { format } from 'date-fns';
 
 const pageSize = 10;
 export default function Leaderboard() {
-	const [gameName, setGameName] = React.useState<GameName>('snake_game');
+	const [gameName, setGameName] = React.useState<GameName>('snake-game');
 	const [currentPage, setCurrentPage] = React.useState(1);
 
 	const { data: scoresData } = useAllScores({ gameName: gameName });
@@ -32,7 +32,7 @@ export default function Leaderboard() {
 						<Autocomplete
 							label="Game"
 							defaultItems={games.filter((game) => game.isLeaderboard)}
-							defaultSelectedKey={'snake_game'}
+							defaultSelectedKey={'snake-game'}
 							onSelectionChange={(key) => {
 								if (key) {
 									setGameName(key as GameName);

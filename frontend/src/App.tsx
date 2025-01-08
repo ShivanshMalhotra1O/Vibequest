@@ -1,25 +1,17 @@
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
-
 import AboutPage from '@/components/About';
 import EmotionDetection from '@/components/EmotionDetection';
 import EmotionGamePage from '@/components/EmotionDetection/EmotionGamePage';
 import EmotionPage from '@/components/EmotionDetection/EmotionPage';
+import Footer from '@/components/Footer';
+import GameComponent from '@/components/Games/GameComponent';
+import GamePage from '@/components/Games/GamePage';
 import HomePage from '@/components/Home';
+import Leaderboard from '@/components/Leaderboard';
 import LoginPage from '@/components/Login';
+import Navbar from '@/components/Navbar';
 import Parallax from '@/components/Parallax';
 import SignUpPage from '@/components/SignUp';
 import ProfilePage from './components/Profile';
-
-// import CoinQuest from '@/components/Games/CoinQuest';
-// import DonkeyKong from '@/components/Games/DonkeyKong';
-// import Pacman from '@/components/Games/Pacman';
-// import SpaceInvaders from '@/components/Games/SpaceInvaders';
-
-import GameComponent from '@/components/Games/GameComponent';
-import GamePage from '@/components/Games/GamePage';
-
-import Leaderboard from '@/components/Leaderboard';
 
 import { useUser } from '@/utils';
 import { Route, Routes, useNavigate } from 'react-router';
@@ -27,9 +19,7 @@ import { Toaster } from 'sonner';
 
 function App() {
 	const navigate = useNavigate();
-
 	const { data, isLoading } = useUser();
-
 	const path = window.location.pathname;
 	const loginPages = ['/login', '/signup'];
 	const nonAuthPages = [...loginPages, '/about', '/', '/leaderboard'];
@@ -97,8 +87,6 @@ function App() {
 						/>
 					}
 				/>
-				{/* <Route path="/games/donkey-kong" element={<DonkeyKong />} /> */}
-				{/* <Route path="/games/pacman" element={<Pacman />} /> */}
 			</Routes>
 			<Footer />
 			<Toaster richColors />

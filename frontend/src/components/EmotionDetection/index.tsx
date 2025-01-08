@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Webcam from 'react-webcam';
 
-// const SOCKET_URL = 'ws://127.0.0.1:8000/ws/detect-emotion/';
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 export default function EmotionDetection() {
 	const navigate = useNavigate();

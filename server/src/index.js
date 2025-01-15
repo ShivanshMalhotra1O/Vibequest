@@ -13,35 +13,41 @@ import express from 'express';
 import gameRouter from './routes/games.js';
 import scoreRouter from './routes/scores.js';
 import userRouter from './routes/user.js';
+import profileRouter from './routes/profile.js'; // Ensure the profile route is correctly imported
 
 const PORT = process.env.PORT ?? 3000;
 const app = express();
+
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
-	cors({
-		origin: [
-			'https://minor-project.mukund.page',
-			'http://localhost:5173',
-			'https://localhost:5173',
-			'http://192.168.29.49:5173',
-			'https://192.168.29.49:5173',
-		],
-		credentials: true,
-	})
+  cors({
+    origin: [
+      'https://minor-project.mukund.page',
+      'http://localhost:5173',
+      'https://localhost:5173',
+      'http://192.168.29.49:5173',
+      'https://192.168.29.49:5173',
+    ],
+    credentials: true,
+  })
 );
 
+// Routes
 app.get('/', (req, res) => {
-	res.json({ message: 'Hello World!' });
+  res.json({ message: 'Hello World!' });
 });
 
-app.use('/user', userRouter);
-app.use('/games', gameRouter);
-app.use('/scores', scoreRouter);
+app.use('/user', userRouter);   // User route
+app.use('/games', gameRouter);  // Games route
+app.use('/scores', scoreRouter);  // Scores route
+app.use('/profile', profileRouter);  // Profile route
 
+// Start Server
 console.log('Starting server...');
 app.listen(PORT, () => {
-	createConnection();
-	console.log(`Server started at http://localhost:${PORT}`);
+  createConnection();
+  console.log(`Server started at http://localhost:${PORT}`);
 });

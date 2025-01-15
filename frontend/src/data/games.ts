@@ -77,6 +77,14 @@ export const games: Array<{
 		gameLink: '/games?game=pacman',
 	},
 	{
+		gameId: 'space-dodge',
+		gameName: 'Space Dodge',
+		gameImage: '/images/game-3.jpg',
+		gameDescription:
+			'A classic arcade game that has been entertaining for decades.',
+		gameLink: `/games?game=space-dodge`,
+	},
+	{
 		gameId: 'vampire-survival',
 		gameName: 'Vampire Survival',
 		gameImage: '/images/game-10.png',
@@ -157,6 +165,14 @@ export const emotionGames = (emotion: Emotion) => [
 		gameDescription:
 			'A classic arcade game that has been entertaining for decades.',
 		gameLink: `/games?game=pacman`,
+	},
+	{
+		gameId: 'space-dodge',
+		gameName: 'Space Dodge',
+		gameImage: '/images/game-3.jpg',
+		gameDescription:
+			'A classic arcade game that has been entertaining for decades.',
+		gameLink: `/games?game=space-dodge`,
 	},
 	{
 		gameId: 'vampire-survival',

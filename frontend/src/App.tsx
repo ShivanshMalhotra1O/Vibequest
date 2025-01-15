@@ -18,80 +18,76 @@ import { Route, Routes, useNavigate } from 'react-router';
 import { Toaster } from 'sonner';
 
 function App() {
-	const navigate = useNavigate();
-	const { data, isLoading } = useUser();
-	const path = window.location.pathname;
-	const loginPages = ['/login', '/signup'];
-	const nonAuthPages = [...loginPages, '/about', '/', '/leaderboard'];
+  const navigate = useNavigate();
+  const { data, isLoading } = useUser();
+  const path = window.location.pathname;
+  const loginPages = ['/login', '/signup'];
+  const nonAuthPages = [...loginPages, '/about', '/', '/leaderboard'];
 
-	if (!isLoading && data && loginPages.includes(path)) {
-		navigate('/home');
-	}
-	if (!isLoading && !data && !nonAuthPages.includes(path)) {
-		navigate('/login');
-	}
+  if (!isLoading && data && loginPages.includes(path)) {
+    navigate('/home');
+  }
+  if (!isLoading && !data && !nonAuthPages.includes(path)) {
+    navigate('/login');
+  }
 
-	return (
-		<>
-			<Navbar />
-			<Routes>
-				<Route index element={<Parallax />} />
-				<Route path="/home" element={<HomePage />} />
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/signup" element={<SignUpPage />} />
-				<Route path="/about" element={<AboutPage />} />
-				<Route path="/about" element={<AboutPage />} />
-				<Route path="/profile" element={<ProfilePage />} />
-				<Route path="/emotion-detection" element={<EmotionDetection />} />
-				<Route path="/emotion/:emotion" element={<EmotionPage />} />
-				<Route path="/emotion/:emotion/:gameId" element={<EmotionGamePage />} />
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route index element={<Parallax />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/emotion-detection" element={<EmotionDetection />} />
+        <Route path="/emotion/:emotion" element={<EmotionPage />} />
+        <Route path="/emotion/:emotion/:gameId" element={<EmotionGamePage />} />
 
-				<Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/games" element={<GamePage />} />
 
-				<Route path="/games" element={<GamePage />} />
-
-				<Route
-					path="/games/snake-game"
-					element={<GameComponent gameName="snake-game" />}
-				/>
-				<Route path="/games/2048" element={<GameComponent gameName="2048" />} />
-				<Route
-					path="/games/space-invaders"
-					element={<GameComponent gameName="space-invaders" />}
-				/>
-				<Route
-					path="/games/car-game"
-					element={<GameComponent gameName="car-game" />}
-				/>
-				<Route
-					path="/games/coin-quest"
-					element={<GameComponent gameName="coin-quest" />}
-				/>
-				<Route
-					path="/games/tetris"
-					element={<GameComponent gameName="tetris" />}
-				/>
-
-				<Route
-					path="/games/chess"
-					element={
-						<GameComponent gameName="chess" toUpdateLeaderboard={false} />
-					}
-				/>
-				<Route
-					path="/games/vampire-survival"
-					element={
-						<GameComponent
-							gameName="vampire-survival"
-							toUpdateLeaderboard={false}
-						/>
-					}
-				/>
-			</Routes>
-			<Footer />
-			<Toaster richColors />
-		</>
-	);
+        <Route
+          path="/games/snake-game"
+          element={<GameComponent gameName="snake-game" />}
+        />
+        <Route path="/games/2048" element={<GameComponent gameName="2048" />} />
+        <Route
+          path="/games/space-invaders"
+          element={<GameComponent gameName="space-invaders" />}
+        />
+        <Route
+          path="/games/car-game"
+          element={<GameComponent gameName="car-game" />}
+        />
+        <Route
+          path="/games/coin-quest"
+          element={<GameComponent gameName="coin-quest" />}
+        />
+        <Route
+          path="/games/tetris"
+          element={<GameComponent gameName="tetris" />}
+        />
+        <Route
+          path="/games/space-dodge"
+          element={<GameComponent gameName="space-dodge" />}
+        />
+        <Route
+          path="/games/chess"
+          element={<GameComponent gameName="chess" toUpdateLeaderboard={false} />}
+        />
+        <Route
+          path="/games/vampire-survival"
+          element={<GameComponent gameName="vampire-survival" toUpdateLeaderboard={false} />}
+        />
+        {/* Route to handle search results for games */}
+        <Route path="/game" element={<GamePage />} />
+      </Routes>
+      <Footer />
+      <Toaster richColors />
+    </>
+  );
 }
 
 export default App;
